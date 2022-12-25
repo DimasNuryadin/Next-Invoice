@@ -1,0 +1,61 @@
+.bg-yellow {
+  background-image: url('../public/img/bg-yellow.png');
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  align-items: center;
+  padding-top: 80px;
+  padding-bottom: 80px;
+}
+
+.bg-login {
+  background: linear-gradient(133.39deg, rgba(255, 255, 255, 0.4) 14.76%, rgba(255, 255, 255, 0.1) 81.82%);
+  box-shadow: 0px 4px 24px -1px #FE7019;
+  backdrop-filter: blur(20px);
+  border-radius: 50px;
+  margin-top: 50px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 48px 204px;
+}
+
+.title-login {
+  color: #fff;
+  font-size: 40px;
+  font-weight: 900;
+}
+
+.input-login {
+  padding-top: 50px;
+}
+
+.input-login input {
+  font-size: 18px;
+  padding: 0px 10px 5px 5px;
+  display: block;
+  width: 280px;
+  border: none;
+  border-bottom: 1px solid #FFFFFF;
+  background-color: rgba(0, 0, 0, 0);
+  color: #fff;
+}
+
+.input-login input:focus {
+  outline: none;
+}
+
+.input-login .image-login {
+  margin-top: 4px;
+}
+
+::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #EFEFEF;
+  opacity: 1;
+  /* Firefox */
+}

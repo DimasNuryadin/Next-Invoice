@@ -1,0 +1,38 @@
+* {
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Satoshi', sans-serif;
+}
+
+/* Container */
+.container-fluid {
+  padding-right: 16px;
+  padding-left: 16px;
+}
+
+/* Button */
+.button {
+  border: none;
+  padding: 5px 25px;
+  color: #fff;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.btn-primary {
+  background-color: #FE7019;
+}
+
+
+.btn-secondary {
+  background-color: #00215E;
+}
+
+.btn-tertiary {
+  background-color: #18AB00;
+}
+
+.btn-quarternary {
+  background-color: #F33535;
+}
