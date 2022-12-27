@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <div>
       <div className="bg-yellow">
-        <Image src="/img/logo-kamojang.png" height={80} width={500} alt="logo" />
+        <Image src="/img/logo-1.png" height={80} width={500} alt="logo" />
         <div className="text-center bg-login">
           <h1 className="title-login">LOGIN</h1>
           <InputLogin type="email" pic="email" placeholder="Email" />

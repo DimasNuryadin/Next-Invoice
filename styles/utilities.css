@@ -21,19 +21,9 @@
   font-size: 20px;
 }
 
-.button-icon {
-  border: none;
-  width: 210px;
-  padding: 13px 18px;
-  color: #fff;
-  border-radius: 10px;
-  font-weight: 700;
-  font-size: 20px;
-  text-align: start;
-}
-
 .btn-primary {
   background-color: #FE7019;
+  color: #fff;
 }
 
 
@@ -52,18 +42,4 @@
 .btn-inactive {
   background-color: #f3353500;
   color: #919191;
-}
-
-.sidebar {
-  padding: 74px 55px;
-  height: 100vh;
-  float: left;
-}
-
-.dashboard {
-  background-color: #F9F9F9;
-  margin-left: 320px;
-  border-radius: 50px 0px 0px 50px;
-  padding: 56px 47px;
-  height: 100vh;
 }

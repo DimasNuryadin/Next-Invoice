@@ -5,7 +5,7 @@ import Button from '../../atoms/Button'
 export default function Sidebar() {
   return (
     <div className='sidebar'>
-      <Image className='mb-2' src="/img/logo-sidebar.png" width={200} height={50} alt="Logo Kamojang" />
+      <Image className='mb-2' src="/img/logo-2.png" width={200} height={50} alt="Logo Kamojang" />
       <div className='mt-5'></div>
       <Button buttonType="btn-primary" label="Create invoice" icon="pen" active />
       <br />
