@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 interface TypeButton {
-  buttonType: 'btn-primary' | 'btn-secondary' | 'btn-tertiary' | 'btn-quarternary' | 'btn-inactive';
+  buttonType: 'btn-primary' | 'btn-secondary' | 'btn-tertiary' | 'btn-quaternary' | 'btn-inactive';
   label: string;
   icon?: 'pen' | 'people';
   active?: boolean;

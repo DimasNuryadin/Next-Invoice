@@ -53,20 +53,8 @@
   /* Firefox */
 }
 
-.create-invoice {}
-
-.box-1 {
-  background-color: #D9D9D9;
-  width: 12px;
-  height: 12px;
-  margin: auto;
-}
-
-.box-2 {
-  background-color: #D9D9D9;
-  width: 12px;
-  height: 591px;
-  margin: auto;
+.create-invoice {
+  padding-top: 40px;
 }
 
 /* PDF Invoice */
@@ -94,7 +82,7 @@
   padding: 13px 11px 8px 11px;
 }
 
-.head-tabel {
+.head-table {
   color: #000;
   font-weight: 500;
   font-size: 12px;

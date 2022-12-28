@@ -1,0 +1,22 @@
+.client {
+  padding-top: 40px;
+}
+
+.client table {
+  width: 100%;
+}
+
+.client tr {
+  border-bottom: 1px solid #919191;
+  height: 100px;
+}
+
+.client .cta-button {
+  float: right;
+  display: flex;
+  margin-top: 20px;
+}
+
+.client .cta-button div {
+  margin: 0px 3px;
+}
