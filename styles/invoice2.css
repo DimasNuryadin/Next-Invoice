@@ -1,5 +1,6 @@
 .create-invoice {
-  padding-top: 40px;
+  max-height: 100vh;
+  overflow-y: auto;
 }
 
 .invoice-description .head {
@@ -17,7 +18,7 @@
 }
 
 .invoice-description .description-input {
-  padding: 10px 0px;
+  padding: 5px 0px;
 }
 
 .invoice-description .description-input div:nth-child(1) {
@@ -41,4 +42,9 @@
   color: #18AB00;
   border: none;
   font-size: 13px;
+}
+
+.input-icon {
+  font-size: 15;
+  padding: 6;
 }

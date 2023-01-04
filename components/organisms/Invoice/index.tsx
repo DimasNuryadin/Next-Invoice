@@ -2,7 +2,7 @@ import Image from 'next/image'
 
 export default function Invoice() {
   return (
-    <div className='col-5'>
+    <div className='col-6'>
       <div className="invoice">
         <div className="row">
           <div className="col cek">
@@ -59,36 +59,32 @@ export default function Invoice() {
 
         {/* Subtotal */}
         <div className="row mt-2 subtotal">
-          <p className='col-5'></p>
-          <p className='col-1 text-center'></p>
+          <p className='col-6'></p>
           <p className='col-3 head-table'>SUBTOTAL</p>
           <p className='col-3 head-table'>Rp 5.000.000</p>
         </div>
 
         {/* DP */}
         <div className="row dp">
-          <p className='col-5'></p>
-          <p className='col-1 text-center'></p>
+          <p className='col-6'></p>
           <div className='col-3'>
-            <p className='head-table' style={{ float: 'left', marginRight: 8 }}>DP 1 </p>
-            <p>16 Des 22</p>
+            <p className='head-table float-start' >DP 1</p>
+            <p className='float-end me-2'>16 Des 22</p>
           </div>
           <p className='col-3'>Rp 1.000.000</p>
         </div>
         <div className="row dp">
-          <p className='col-5'></p>
-          <p className='col-1 text-center'></p>
+          <p className='col-6'></p>
           <div className='col-3'>
-            <p className='head-table' style={{ float: 'left', marginRight: 8 }}>DP 2 </p>
-            <p>16 Des 22</p>
+            <p className='head-table float-start' >DP 1</p>
+            <p className='float-end me-2'>16 Des 22</p>
           </div>
           <p className='col-3'>Rp 1.000.000</p>
         </div>
 
         {/* Sisa */}
         <div className="row subtotal">
-          <p className='col-5'></p>
-          <p className='col-1 text-center'></p>
+          <p className='col-6'></p>
           <p className='col-3 head-table'>SISA</p>
           <p className='col-3 head-table'>Rp 4.000.000</p>
         </div>

@@ -62,13 +62,13 @@
 .invoice-title {
   color: #F37335;
   font-weight: 700;
-  font-size: 24px;
+  font-size: 28px;
   padding-top: 2px;
 }
 
 .invoice-address {
   color: #000;
-  font-size: 10px;
+  font-size: 9px;
   white-space: pre-line;
 }
 
@@ -81,12 +81,12 @@
 .invoice .head-table {
   color: #000;
   font-weight: 500;
-  font-size: 12px;
+  font-size: 11px;
 }
 
 .invoice .bill {
   color: #000;
-  font-size: 12px;
+  font-size: 11px;
   line-height: 2px;
   font-weight: 400;
 }
@@ -98,7 +98,7 @@
 }
 
 .name-invoice p {
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 400;
 }
 
@@ -108,7 +108,7 @@
 }
 
 .invoice .subtotal p {
-  font-size: 11px;
+  font-size: 10px;
 }
 
 .invoice .dp {
@@ -117,7 +117,7 @@
 }
 
 .invoice .dp p {
-  font-size: 11px;
+  font-size: 10px;
 }
 
 .payment-isntructions {

@@ -9,13 +9,8 @@ export default function CreateInvoice1() {
       <Sidebar url="create-invoice" />
       <div className='dashboard'>
         <NavBar />
-        <div className='row mt-5 create-invoice'>
+        <div className='row mt-5 pt-4'>
           <FormInvoice1 />
-          <div className="col-1 line-1">
-            <div></div>
-            <div></div>
-            <br />
-          </div>
 
           {/* Invoice */}
           <Invoice />
