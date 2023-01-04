@@ -1,12 +1,12 @@
 .sidebar {
-  padding: 74px 55px;
+  padding: 74px 30px;
   height: 100vh;
   float: left;
 }
 
 .dashboard {
   background-color: #F9F9F9;
-  margin-left: 320px;
+  margin-left: 280px;
   border-radius: 50px 0px 0px 50px;
   padding: 56px 47px;
   max-height: fit-content;
@@ -14,11 +14,11 @@
 
 .button-icon {
   border: none;
-  width: 210px;
-  padding: 13px 18px;
+  padding: 8px 18px;
+  width: 200px;
   border-radius: 10px;
   font-weight: 700;
-  font-size: 20px;
+  font-size: 18px;
   text-align: start;
 }
 
@@ -53,10 +53,6 @@
   /* Firefox */
 }
 
-.create-invoice {
-  padding-top: 40px;
-}
-
 /* PDF Invoice */
 .invoice {
   background-color: #fff;
@@ -82,7 +78,7 @@
   padding: 13px 11px 8px 11px;
 }
 
-.head-table {
+.invoice .head-table {
   color: #000;
   font-weight: 500;
   font-size: 12px;

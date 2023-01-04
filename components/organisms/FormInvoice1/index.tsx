@@ -1,0 +1,38 @@
+import Link from "next/link";
+import Button from "../../atoms/Button";
+
+export default function FormInvoice1() {
+  return (
+    <div className='col-6'>
+      <h2 className='title-2'>CREATE INVOICES</h2>
+      <div className="mb-3 mt-5">
+        <label htmlFor="Alamat Perusahaan" className="form-label label">Alamat Perusahaan</label>
+        <textarea className="form-control" id="Alamat Perusahaan" rows={3}></textarea>
+        <br />
+        <label htmlFor="Invoice No" className="form-label label">Invoice No</label>
+        <input className="form-control" type="text" id="Invoice No" />
+        <br />
+        <label htmlFor="Bill to" className="form-label label">Bill to</label>
+        <input className="form-control" type="text" id="Bill to" />
+        <br />
+        <div className="row">
+          <div className="col">
+            <label htmlFor="Invoice Date" className="form-label label">Invoice Date</label>
+            <input className="form-control" type="date" id="Invoice Date" />
+          </div>
+          <div className="col">
+            <label htmlFor="Due Date" className="form-label label">Due Date</label>
+            <input className="form-control" type="date" id="Due Date" />
+          </div>
+        </div>
+
+        {/* Button Next Page */}
+        <div className='mt-4 text-end'>
+          <Link href="/CreateInvoice2">
+            <Button buttonType="btn-primary" label="Next Page" />
+          </Link>
+        </div>
+      </div>
+    </div>
+  )
+}

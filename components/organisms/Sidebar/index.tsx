@@ -16,12 +16,12 @@ export default function Sidebar(props: SidebarProps) {
         <Image className='mb-2' src="/img/logo-2.png" width={200} height={50} alt="Logo Kamojang" />
         <div className='mt-5'></div>
         <Link href="/CreateInvoice1">
-          <Button buttonType="btn-primary" label="Create invoice" icon="pen" active />
+          <Button buttonType="btn-primary" label="Create invoice" icon="pen" size="large" active />
         </Link>
         <br />
         <div className='mt-4'></div>
         <Link href="/Client">
-          <Button buttonType="btn-inactive" label="Clients" icon="people" />
+          <Button buttonType="btn-inactive" label="Clients" icon="people" size="large" />
         </Link>
       </div>
     )
@@ -32,12 +32,12 @@ export default function Sidebar(props: SidebarProps) {
       <Image className='mb-2' src="/img/logo-2.png" width={200} height={50} alt="Logo Kamojang" />
       <div className='mt-5'></div>
       <Link href="/CreateInvoice1">
-        <Button buttonType="btn-inactive" label="Create invoice" icon="pen" />
+        <Button buttonType="btn-inactive" label="Create invoice" icon="pen" size="large" />
       </Link>
       <br />
       <div className='mt-4'></div>
       <Link href="/Client">
-        <Button buttonType="btn-primary" label="Clients" icon="people" active />
+        <Button buttonType="btn-primary" label="Clients" icon="people" size="large" active />
       </Link>
     </div>
   )

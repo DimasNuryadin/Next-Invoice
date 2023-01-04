@@ -29,6 +29,7 @@
 
 .btn-secondary {
   background-color: #00215E;
+  color: #fff;
 }
 
 .btn-tertiary {
@@ -80,4 +81,12 @@
   height: 591px;
   margin: auto;
   border-radius: 5px;
+}
+
+input[type=date]:required:invalid::-webkit-datetime-edit {
+  color: transparent;
+}
+
+input[type=date]:focus::-webkit-datetime-edit {
+  color: black !important;
 }

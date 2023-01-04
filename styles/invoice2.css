@@ -1,0 +1,44 @@
+.create-invoice {
+  padding-top: 40px;
+}
+
+.invoice-description .head {
+  background-color: rgba(243, 115, 53, 0.2);
+  border-radius: 5px;
+  align-items: center;
+}
+
+.invoice-description .head p {
+  margin-top: 15px;
+  line-height: 1px;
+  font-weight: 500;
+  color: #131313;
+  font-size: 14px;
+}
+
+.invoice-description .description-input {
+  padding: 10px 0px;
+}
+
+.invoice-description .description-input div:nth-child(1) {
+  padding: 0px 10px 0px 0px;
+}
+
+.invoice-description .description-input div:nth-child(2) {
+  padding: 0px;
+}
+
+.invoice-description .description-input div:nth-child(3) {
+  padding: 0px 0px 0px 10px;
+}
+
+.invoice-description .description-input div:nth-child(4) {
+  padding: 0px 0px 0px 10px;
+}
+
+.btn-show-item {
+  background-color: rgba(255, 255, 255, 0);
+  color: #18AB00;
+  border: none;
+  font-size: 13px;
+}

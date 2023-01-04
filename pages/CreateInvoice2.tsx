@@ -1,8 +1,9 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import React from 'react'
 import Button from '../components/atoms/Button'
+import ButtonShowItem from '../components/molecules/ButtonShowItem'
 import NavBar from '../components/molecules/NavBar'
+import Invoice from '../components/organisms/Invoice'
 import Sidebar from '../components/organisms/Sidebar'
 
 export default function CreateInvoice2() {
@@ -13,33 +14,108 @@ export default function CreateInvoice2() {
         <NavBar />
 
         <div className='row mt-5 create-invoice'>
-          <div className='col-5'>
+          <div className='col-6'>
             <h2 className='title-2'>CREATE INVOICES</h2>
-            <div className="mb-3 mt-5">
-              <label htmlFor="Alamat Perusahaan" className="form-label label">Alamat Perusahaan</label>
-              <textarea className="form-control" id="Alamat Perusahaan" rows={3}></textarea>
-              <br />
-              <label htmlFor="Invoice No" className="form-label label">Invoice No</label>
-              <input className="form-control" type="text" id="Invoice No" />
-              <br />
-              <label htmlFor="Bill to" className="form-label label">Bill to</label>
-              <input className="form-control" type="text" id="Bill to" />
-              <br />
+            <div className='mb-3 mt-5 invoice-description'>
+              <div className="row text-center head">
+                <p className="col-4 head-table">Description</p>
+                <p className="col-1 head-table">Qty</p>
+                <p className="col-3 head-table">Rate</p>
+                <p className="col-3 head-table">Amount</p>
+              </div>
+              <div className="row text-center description-input">
+                <div className="col-4">
+                  <input type="text" className="form-control" />
+                </div>
+                <div className="col-1">
+                  <input type="text" className="form-control" />
+                </div>
+                <div className="col-3">
+                  <div className="input-group ">
+                    <span className="input-group-text bg-white border-none" id="basic-addon1" style={{ fontSize: 15, padding: 6 }} >Rp</span>
+                    <input type="text" className="form-control" aria-label="Username" aria-describedby="basic-addon1" style={{ padding: '0px 2px', borderLeft: 'none' }} />
+                  </div>
+                </div>
+                <div className="col-4" >
+                  <p className='float-start my-auto mt-1'>Rp. 150.0000</p>
+                  <button className='bg-white float-end border-0 mt-1'>X</button>
+                </div>
+              </div>
+            </div>
+            <Button buttonType="btn-secondary" label="Line Item" icon="plus" size="medium" active />
+
+            {/* Subtotal */}
+            <div className='text-bold text-end'>
+              <div className='row'>
+                <div className="col-4"></div>
+                <p className='col-4 label'>Subtotal</p>
+                <p className='col-4 label'>Rp. 250.000</p>
+              </div>
+
+              {/* Discount Tax Shipping */}
               <div className="row">
-                <div className="col">
-                  <label htmlFor="Invoice Date" className="form-label label">Invoice Date</label>
-                  <input className="form-control" type="date" id="Invoice Date" />
+                <div className="col-4"></div>
+                <div className="col-3">
+                  <ButtonShowItem label='Discount' />
                 </div>
-                <div className="col">
-                  <label htmlFor="Due Date" className="form-label label">Due Date</label>
-                  <input className="form-control" type="date" id="Due Date" />
+                <div className="col-2">
+                  <ButtonShowItem label='Tax' />
+                </div>
+                <div className="col-3">
+                  <ButtonShowItem label='Shipping' />
                 </div>
               </div>
-              <div className='mt-4 text-end'>
-                <Link href="/CreateInvoice2">
-                  <Button buttonType="btn-primary" label="Submit" />
-                </Link>
+
+              {/* Total */}
+              <div className="row mt-3">
+                <div className="col-4"></div>
+                <p className='col-4 label'>Total</p>
+                <p className='col-4 label'>Rp. 250.000</p>
               </div>
+
+              {/* DP */}
+              <div className="row">
+                <div className="col-4"></div>
+                <div className="col-5">
+                  <div className="row" >
+                    <button className='col-1 my-auto border-0 bg-transparent'>
+                      <Image src="/icon/plus-dark.svg" width={10} height={10} alt="Plus Dark" />
+                    </button>
+                    <p className='col-4 my-auto label'>DP 1</p>
+                    <input className="form-control col" type="date" id="Due Date" required />
+                  </div>
+                </div>
+                <div className="col-3">
+                  <div className="input-group ">
+                    <span className="input-group-text bg-white border-none" id="basic-addon1" style={{ fontSize: 15, padding: 6 }} >Rp</span>
+                    <input type="text" className="form-control" aria-label="Username" aria-describedby="basic-addon1" style={{ padding: '0px 2px', borderLeft: 'none' }} />
+                  </div>
+                </div>
+              </div>
+
+              {/* Sisa */}
+              <div className="row mt-3">
+                <div className="col-4"></div>
+                <p className='col-4 label'>Sisa</p>
+                <p className='col-4 label'>Rp. XXX.000</p>
+              </div>
+            </div>
+
+            {/* Payment Instruction */}
+            <div className='row'>
+              <div className="col-7">
+                <label htmlFor="Alamat Perusahaan" className="form-label label">Payments Instructions</label>
+                <textarea className="form-control" id="Alamat Perusahaan" rows={4}></textarea>
+              </div>
+              <div className="col-5"></div>
+            </div>
+
+            {/* Button Submit */}
+            <div className='mt-4 text-end' style={{ backgroundColor: 'red' }}>
+              {/* Bug di Link */}
+              <Link href="/CreateInvoice2" >
+                <Button buttonType="btn-primary" label="Submit" />
+              </Link>
             </div>
           </div>
 
@@ -50,111 +126,7 @@ export default function CreateInvoice2() {
           </div>
 
           {/* Invoice */}
-          <div className='col-6'>
-            <div className="invoice">
-              <div className="row">
-                <div className="col cek">
-                  <Image src="/img/logo-3.png" width={160} height={40} alt="Logo Kamojang" />
-                  <p className='mt-3 invoice-address'>
-                    Jl. Raya Kamojang No. 74 RT. 03 RW. 06
-                    Ds. Laksana Kec. Ibun Kab. Bandung
-                    Mobile : 08123456789
-                    Email : contoh@email.com
-                  </p>
-                </div>
-                <p className="col text-end invoice-title">
-                  INVOICE
-                </p>
-              </div>
-
-              <div className="row bill-information">
-                <div className="col">
-                  <p className='head-table'>Bill To :</p>
-                  <p className='bill'>PT ABC</p>
-                </div>
-                <div className="col text-end">
-                  <p className='head-table'>Invoice No : KMD/.../...-...</p>
-                  <p className='bill'>Invoice Date : 12 Des 2022</p>
-                  <p className='bill'>Due Date :  12 Des 2022</p>
-                </div>
-              </div>
-              <br />
-              <div className="row bill-information" style={{ height: '44px' }}>
-                <p className='col-1 head-table'>No</p>
-                <p className='col-4 head-table'>Description</p>
-                <p className='col-1 head-table'>Qty</p>
-                <p className='col-3 head-table'>Rate</p>
-                <p className='col-3 head-table'>Amount</p>
-              </div>
-
-              <div className="row name-invoice">
-                <p className='col-1 text-center'>1</p>
-                <p className='col-4'>Lorem ipsum dolor sit amet
-                  consectetur.</p>
-                <p className='col-1 text-center'>2</p>
-                <p className='col-3'>Rp 2.000.000</p>
-                <p className='col-3'>Rp 4.000.000</p>
-              </div>
-
-              <div className="row name-invoice">
-                <p className='col-1 text-center'>2</p>
-                <p className='col-4'>Lorem ipsum dolor sit amet
-                  consectetur.</p>
-                <p className='col-1 text-center'>2</p>
-                <p className='col-3'>Rp 2.000.000</p>
-                <p className='col-3'>Rp 4.000.000</p>
-              </div>
-
-              {/* Subtotal */}
-              <div className="row mt-2 subtotal">
-                <p className='col-5'></p>
-                <p className='col-1 text-center'></p>
-                <p className='col-3 head-table'>SUBTOTAL</p>
-                <p className='col-3 head-table'>Rp 5.000.000</p>
-              </div>
-
-              {/* DP */}
-              <div className="row dp">
-                <p className='col-5'></p>
-                <p className='col-1 text-center'></p>
-                <div className='col-3'>
-                  <p className='head-table' style={{ float: 'left', marginRight: 8 }}>DP 1 </p>
-                  <p>16 Des 22</p>
-                </div>
-                <p className='col-3'>Rp 1.000.000</p>
-              </div>
-              <div className="row dp">
-                <p className='col-5'></p>
-                <p className='col-1 text-center'></p>
-                <div className='col-3'>
-                  <p className='head-table' style={{ float: 'left', marginRight: 8 }}>DP 2 </p>
-                  <p>16 Des 22</p>
-                </div>
-                <p className='col-3'>Rp 1.000.000</p>
-              </div>
-
-              {/* Sisa */}
-              <div className="row subtotal">
-                <p className='col-5'></p>
-                <p className='col-1 text-center'></p>
-                <p className='col-3 head-table'>SISA</p>
-                <p className='col-3 head-table'>Rp 4.000.000</p>
-              </div>
-
-              {/* Payment Instruction */}
-              <div className="payment-isntructions">
-                <p className='head-table'>Payments Instructions</p>
-                <p className='invoice-address'>
-                  Pembayaran melalui rekening :
-
-                  PT KAMOJANG MANDIRI
-                  BANK MANDIRI
-                  A/C No. 1310001204009
-                  REK. DOLLAR PT KAMOJANG MANDIRI
-                  No. 131-00-1967023-3</p>
-              </div>
-            </div>
-          </div>
+          <Invoice />
         </div>
       </div>
     </div>
