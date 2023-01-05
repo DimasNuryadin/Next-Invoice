@@ -1,6 +1,17 @@
 import Image from 'next/image'
+interface InvoiceProps {
+  desc: Desc[];
+}
 
-export default function Invoice() {
+interface Desc {
+  description: string;
+  qty: number;
+  rate: number;
+}
+
+export default function Invoice(props: InvoiceProps) {
+  const { desc } = props;
+
   return (
     <div className='col-6'>
       <div className="invoice">
@@ -39,23 +50,17 @@ export default function Invoice() {
           <p className='col-3 head-table'>Amount</p>
         </div>
 
-        <div className="row name-invoice">
-          <p className='col-1 text-center'>1</p>
-          <p className='col-4'>Lorem ipsum dolor sit amet
-            consectetur.</p>
-          <p className='col-1 text-center'>2</p>
-          <p className='col-3'>Rp 2.000.000</p>
-          <p className='col-3'>Rp 4.000.000</p>
-        </div>
-
-        <div className="row name-invoice">
-          <p className='col-1 text-center'>2</p>
-          <p className='col-4'>Lorem ipsum dolor sit amet
-            consectetur.</p>
-          <p className='col-1 text-center'>2</p>
-          <p className='col-3'>Rp 2.000.000</p>
-          <p className='col-3'>Rp 4.000.000</p>
-        </div>
+        {desc.map((data, index) => {
+          return (
+            <div className="row name-invoice" key={index}>
+              <p className='col-1 text-center'>{index + 1}</p>
+              <p className='col-4'>{data.description}</p>
+              <p className='col-1 text-center'>{data.qty}</p>
+              <p className='col-3'>Rp. {data.rate}</p>
+              <p className='col-3'>{data.qty * data.rate}</p>
+            </div>
+          )
+        })}
 
         {/* Subtotal */}
         <div className="row mt-2 subtotal">

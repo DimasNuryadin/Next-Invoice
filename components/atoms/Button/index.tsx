@@ -6,9 +6,10 @@ interface TypeButton {
   icon?: 'pen' | 'people' | 'plus';
   active?: boolean;
   size?: 'medium' | 'large'
+  onClick: React.MouseEventHandler<HTMLButtonElement>
 }
 export default function Button(props: Partial<TypeButton>) {
-  const { buttonType, label, icon, active, size } = props;
+  const { buttonType, label, icon, active, size, onClick } = props;
   let sizeIcon = 0;
   if (size === 'large') {
     sizeIcon = 24
@@ -19,7 +20,7 @@ export default function Button(props: Partial<TypeButton>) {
   if (icon && active) {
     return (
       <div>
-        <button className={`button-icon ${buttonType}`}>
+        <button className={`button-icon ${buttonType}`} onClick={onClick}>
           <Image src={`/icon/${icon}-light.svg`} width={sizeIcon} height={sizeIcon} alt={icon} style={{ marginTop: -4 }} /> {label}</button>
       </div>
     )
@@ -28,7 +29,7 @@ export default function Button(props: Partial<TypeButton>) {
   if (icon && !active) {
     return (
       <div>
-        <button className={`button-icon ${buttonType}`}>
+        <button className={`button-icon ${buttonType}`} onClick={onClick}>
           <Image src={`/icon/${icon}-dark.svg`} width={sizeIcon} height={sizeIcon} alt={icon} style={{ marginTop: -4 }} /> {label}</button>
       </div>
     )
@@ -36,7 +37,7 @@ export default function Button(props: Partial<TypeButton>) {
 
   return (
     <div>
-      <button className={`button ${buttonType}`}>{label}</button>
+      <button className={`button ${buttonType}`} onClick={onClick}>{label}</button>
     </div>
   )
 }

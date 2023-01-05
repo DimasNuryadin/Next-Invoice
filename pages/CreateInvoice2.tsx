@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { useState } from 'react'
 import Button from '../components/atoms/Button'
 import ButtonShowItem from '../components/molecules/ButtonShowItem'
 import NavBar from '../components/molecules/NavBar'
@@ -7,6 +8,44 @@ import Invoice from '../components/organisms/Invoice'
 import Sidebar from '../components/organisms/Sidebar'
 
 export default function CreateInvoice2() {
+  const [desc, setDesc] = useState([
+    { description: "", qty: 0, rate: 0 },
+  ])
+  const [dp, setDp] = useState([
+    {
+      date: "",
+      rate: 0,
+    }
+  ])
+
+  // Line Item Description
+  const addLineDescription = () => {
+    setDesc([...desc, { description: "", qty: 0, rate: 0 }])
+  }
+  const removeLineDescription = (index) => {
+    const list = [...desc]
+    list.splice(index, 1)
+    setDesc(list)
+  }
+
+  // Line Item DP
+  const addLineDP = () => {
+    setDp([...dp, { date: "", rate: 0 }])
+  }
+  const removeLineDP = (index) => {
+    const list = [...desc]
+    list.splice(index, 1)
+    setDp(list)
+  }
+
+  // Handlechange
+  const handleChangeDesc = (e, index) => {
+    const { name, value } = e.target
+    const list = [...desc];
+    list[index][name] = value;
+    setDesc(list)
+  }
+
   return (
     <div className='invoice-page'>
       <Sidebar url="create-invoice" />
@@ -24,46 +63,34 @@ export default function CreateInvoice2() {
                 <p className="col-3 head-table">Amount</p>
               </div>
 
-              <div className="row text-center description-input">
-                <div className="col-4">
-                  <input type="text" className="form-control" />
-                </div>
-                <div className="col-1">
-                  <input type="text" className="form-control" />
-                </div>
-                <div className="col-3">
-                  <div className="input-group ">
-                    <label className="input-group-text bg-white border-none" htmlFor="rate" style={{ fontSize: 15, padding: 6 }} >Rp</label>
-                    <input type="text" className="form-control border-start-0" id="rate" style={{ padding: '0px 2px' }} />
+              {desc.map((data, index) => (
+                <div key={index}>
+                  <div className="row text-center description-input">
+                    <div className="col-4">
+                      <input type="text" className="form-control" name="description" value={data.description} onChange={(e) => handleChangeDesc(e, index)} />
+                    </div>
+                    <div className="col-1">
+                      <input type="text" className="form-control" name="qty" value={data.qty} onChange={(e) => handleChangeDesc(e, index)} />
+                    </div>
+                    <div className="col-3">
+                      <div className="input-group ">
+                        <label className="input-group-text bg-white border-none" htmlFor="rate" style={{ fontSize: 15, padding: 6 }} >Rp</label>
+                        <input type="text" className="form-control border-start-0" id="rate" style={{ padding: '0px 2px' }} name="rate" value={data.rate} onChange={(e) => handleChangeDesc(e, index)} />
+                      </div>
+                    </div>
+                    <div className="col-4" >
+                      <p className='float-start my-auto mt-1'>Rp. {data.rate * data.qty}</p>
+                      {desc.length > 1 && (
+                        <button className='bg-white float-end border-0 mt-1' onClick={() => removeLineDescription(index)}>X</button>
+                      )}
+                    </div>
                   </div>
+                  {desc.length - 1 === index && (
+                    <Button buttonType="btn-secondary" label="Line Item" icon="plus" size="medium" active onClick={addLineDescription} />
+                  )}
                 </div>
-                <div className="col-4" >
-                  <p className='float-start my-auto mt-1'>Rp. 150.0000</p>
-                  <button className='bg-white float-end border-0 mt-1'>X</button>
-                </div>
-              </div>
-
-              <div className="row text-center description-input">
-                <div className="col-4">
-                  <input type="text" className="form-control" />
-                </div>
-                <div className="col-1">
-                  <input type="text" className="form-control" />
-                </div>
-                <div className="col-3">
-                  <div className="input-group ">
-                    <label className="input-group-text bg-white border-none" htmlFor="rate" style={{ fontSize: 15, padding: 6 }} >Rp</label>
-                    <input type="text" className="form-control border-start-0" id="rate" style={{ padding: '0px 2px' }} />
-                  </div>
-                </div>
-                <div className="col-4" >
-                  <p className='float-start my-auto mt-1'>Rp. 150.0000</p>
-                  <button className='bg-white float-end border-0 mt-1'>X</button>
-                </div>
-              </div>
-
+              ))}
             </div>
-            <Button buttonType="btn-secondary" label="Line Item" icon="plus" size="medium" active />
 
             {/* Subtotal */}
             <div className='text-bold text-end'>
@@ -170,7 +197,7 @@ export default function CreateInvoice2() {
           </div>
 
           {/* Invoice */}
-          <Invoice />
+          <Invoice desc={desc} />
         </div>
       </div>
     </div>
