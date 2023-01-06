@@ -18,6 +18,9 @@ export default function CreateInvoice2() {
     }
   ])
 
+  // console.log("desc :", desc)
+  // console.log("dp :", dp)
+
   // Line Item Description
   const addLineDescription = () => {
     setDesc([...desc, { description: "", qty: 0, rate: 0 }])
@@ -38,12 +41,20 @@ export default function CreateInvoice2() {
     setDp(list)
   }
 
-  // Handlechange
+  // Handle Change Dp
   const handleChangeDesc = (e, index) => {
     const { name, value } = e.target
     const list = [...desc];
     list[index][name] = value;
     setDesc(list)
+  }
+
+  // Handle Change Dp
+  const handleChangeDp = (e, index) => {
+    const { name, value } = e.target
+    const list = [...dp];
+    list[index][name] = value;
+    setDp(list)
   }
 
   return (
@@ -131,43 +142,26 @@ export default function CreateInvoice2() {
               </div>
 
               {/* DP */}
-              <div className="row mb-2">
-                <div className="col-4"></div>
-                <div className="col-5">
-                  <div className="row" >
-                    <button className='col-1 my-auto border-0 bg-transparent'>
-                      <Image src="/icon/plus-dark.svg" width={10} height={10} alt="Plus Dark" />
-                    </button>
-                    <p className='col-4 my-auto label text-start'>DP 1</p>
-                    <input className="form-control col" type="date" id="Due Date" required />
+              {dp.map((data, index) => (
+                <div className="row mb-2" key={index}>
+                  <div className="col-4"></div>
+                  <div className="col-5">
+                    <div className="row" >
+                      <button className='col-1 my-auto border-0 bg-transparent' onClick={() => addLineDP(index)}>
+                        <Image src="/icon/plus-dark.svg" width={10} height={10} alt="Plus Dark" />
+                      </button>
+                      <p className='col-4 my-auto label text-start'>DP {index + 1}</p>
+                      <input className="form-control col" type="date" id="Due Date" name="date" value={data.date} onChange={(e) => handleChangeDp(e, index)} required />
+                    </div>
+                  </div>
+                  <div className="col-3">
+                    <div className="input-group ">
+                      <label className="input-group-text bg-white border-none" style={{ fontSize: 15, padding: 6 }} htmlFor="dp1" >Rp</label>
+                      <input type="text" className="form-control border-start-0" style={{ padding: '0px 2px' }} id="dp1" name="rate" value={data.rate} onChange={(e) => handleChangeDp(e, index)} />
+                    </div>
                   </div>
                 </div>
-                <div className="col-3">
-                  <div className="input-group ">
-                    <label className="input-group-text bg-white border-none" style={{ fontSize: 15, padding: 6 }} htmlFor="dp1" >Rp</label>
-                    <input type="text" className="form-control border-start-0" style={{ padding: '0px 2px' }} id="dp1" />
-                  </div>
-                </div>
-              </div>
-
-              <div className="row mb-2">
-                <div className="col-4"></div>
-                <div className="col-5">
-                  <div className="row" >
-                    <button className='col-1 my-auto border-0 bg-transparent'>
-                      <Image src="/icon/plus-dark.svg" width={10} height={10} alt="Plus Dark" />
-                    </button>
-                    <p className='col-4 my-auto label text-start'>DP 2</p>
-                    <input className="form-control col" type="date" id="Due Date" required />
-                  </div>
-                </div>
-                <div className="col-3">
-                  <div className="input-group ">
-                    <label className="input-group-text bg-white border-none" style={{ fontSize: 15, padding: 6 }} htmlFor="dp2" >Rp</label>
-                    <input type="text" className="form-control border-start-0" style={{ padding: '0px 2px' }} id="dp2" />
-                  </div>
-                </div>
-              </div>
+              ))}
 
               {/* Sisa */}
               <div className="row mt-1">
@@ -197,7 +191,7 @@ export default function CreateInvoice2() {
           </div>
 
           {/* Invoice */}
-          <Invoice desc={desc} />
+          <Invoice desc={desc} dp={dp} />
         </div>
       </div>
     </div>

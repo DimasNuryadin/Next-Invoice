@@ -13,7 +13,7 @@ export default function CreateInvoice1() {
           <FormInvoice1 />
 
           {/* Invoice */}
-          <Invoice />
+          {/* <Invoice /> */}
         </div>
       </div>
     </div>

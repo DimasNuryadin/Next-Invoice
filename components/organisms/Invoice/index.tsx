@@ -1,6 +1,7 @@
 import Image from 'next/image'
 interface InvoiceProps {
   desc: Desc[];
+  dp: Dp[];
 }
 
 interface Desc {
@@ -9,8 +10,19 @@ interface Desc {
   rate: number;
 }
 
+interface Dp {
+  date: string;
+  rate: number;
+}
+
 export default function Invoice(props: InvoiceProps) {
-  const { desc } = props;
+  const { desc, dp } = props;
+  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
+
+  // const coba = dp[0].date;
+  // const month = coba.getUTCDate()
+
+  // console.log("coba :", coba)
 
   return (
     <div className='col-6'>
@@ -70,18 +82,20 @@ export default function Invoice(props: InvoiceProps) {
         </div>
 
         {/* DP */}
-        <div className="row dp">
-          <p className='col-6'></p>
-          <div className='col-3'>
-            <p className='head-table float-start' >DP 1</p>
-            <p className='float-end me-2'>16 Des 22</p>
+        {dp.map((data, index) => (
+          <div className="row dp" key={index}>
+            <p className='col-6'></p>
+            <div className='col-3'>
+              <p className='head-table float-start' >DP {index + 1}</p>
+              <p className='float-end me-2'>{data.date}</p>
+            </div>
+            <p className='col-3'>Rp {data.rate}</p>
           </div>
-          <p className='col-3'>Rp 1.000.000</p>
-        </div>
+        ))}
         <div className="row dp">
           <p className='col-6'></p>
           <div className='col-3'>
-            <p className='head-table float-start' >DP 1</p>
+            <p className='head-table float-start' >DP 2</p>
             <p className='float-end me-2'>16 Des 22</p>
           </div>
           <p className='col-3'>Rp 1.000.000</p>
