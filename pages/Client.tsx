@@ -1,21 +1,22 @@
 import NavBar from '../components/molecules/NavBar'
 import Sidebar from '../components/organisms/Sidebar'
-import axios from 'axios'
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import InvoiceItem from '../components/molecules/InvoiceItem';
+import { getInvoices } from '../services/user';
 
 export default function Clients() {
   const [invoicesList, setInvoicesList] = useState<any[]>([])
 
-  useEffect(() => {
-    const getAllInvoices = async () => {
-      const response = await axios.get('http://localhost:4000/invoices')
-      console.log('data :', response.data);
-      setInvoicesList(response.data.data)
-    }
+  // Callback
+  const getAllInvoices = useCallback(async () => {
+    const data = await getInvoices()
+    setInvoicesList(data);
+    console.log('cek')
+  }, [])
 
+  useEffect(() => {
     getAllInvoices();
-  }, []);
+  }, [getAllInvoices]);
 
   return (
     <div className='invoice-page'>
