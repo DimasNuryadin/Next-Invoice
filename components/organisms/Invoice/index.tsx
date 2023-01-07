@@ -1,7 +1,7 @@
 import Image from 'next/image'
 interface InvoiceProps {
-  desc: Desc[];
-  dp: Dp[];
+  desc?: Desc[];
+  dp?: Dp[];
 }
 
 interface Desc {
@@ -15,7 +15,7 @@ interface Dp {
   rate: number;
 }
 
-export default function Invoice(props: InvoiceProps) {
+export default function Invoice(props: Partial<InvoiceProps>) {
   const { desc, dp } = props;
   const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
 
@@ -62,17 +62,20 @@ export default function Invoice(props: InvoiceProps) {
           <p className='col-3 head-table'>Amount</p>
         </div>
 
-        {desc.map((data, index) => {
-          return (
-            <div className="row name-invoice" key={index}>
-              <p className='col-1 text-center'>{index + 1}</p>
-              <p className='col-4'>{data.description}</p>
-              <p className='col-1 text-center'>{data.qty}</p>
-              <p className='col-3'>Rp. {data.rate}</p>
-              <p className='col-3'>{data.qty * data.rate}</p>
-            </div>
-          )
-        })}
+        {/* Description */}
+        {desc && (
+          desc.map((data, index) => {
+            return (
+              <div className="row name-invoice" key={index}>
+                <p className='col-1 text-center'>{index + 1}</p>
+                <p className='col-4'>{data.description}</p>
+                <p className='col-1 text-center'>{data.qty}</p>
+                <p className='col-3'>Rp. {data.rate}</p>
+                <p className='col-3'>{data.qty * data.rate}</p>
+              </div>
+            )
+          })
+        )}
 
         {/* Subtotal */}
         <div className="row mt-2 subtotal">
@@ -82,16 +85,19 @@ export default function Invoice(props: InvoiceProps) {
         </div>
 
         {/* DP */}
-        {dp.map((data, index) => (
-          <div className="row dp" key={index}>
-            <p className='col-6'></p>
-            <div className='col-3'>
-              <p className='head-table float-start' >DP {index + 1}</p>
-              <p className='float-end me-2'>{data.date}</p>
+        {dp && (
+          dp.map((data, index) => (
+            <div className="row dp" key={index}>
+              <p className='col-6'></p>
+              <div className='col-3'>
+                <p className='head-table float-start' >DP {index + 1}</p>
+                <p className='float-end me-2'>{data.date}</p>
+              </div>
+              <p className='col-3'>Rp {data.rate}</p>
             </div>
-            <p className='col-3'>Rp {data.rate}</p>
-          </div>
-        ))}
+          ))
+        )}
+
         <div className="row dp">
           <p className='col-6'></p>
           <div className='col-3'>

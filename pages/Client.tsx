@@ -1,8 +1,22 @@
-import Button from '../components/atoms/Button'
 import NavBar from '../components/molecules/NavBar'
 import Sidebar from '../components/organisms/Sidebar'
+import axios from 'axios'
+import { useEffect, useState } from 'react';
+import InvoiceItem from '../components/molecules/InvoiceItem';
 
 export default function Clients() {
+  const [invoicesList, setInvoicesList] = useState([])
+
+  useEffect(() => {
+    const getAllInvoices = async () => {
+      const response = await axios.get('http://localhost:4000/invoices')
+      console.log('data :', response.data);
+      setInvoicesList(response.data.data)
+    }
+
+    getAllInvoices();
+  }, []);
+
   return (
     <div className='invoice-page'>
       <Sidebar url="clients" />
@@ -14,34 +28,11 @@ export default function Clients() {
             <h2 className='title-2'>CLIENTS</h2>
 
             {/* CLient List */}
-            <div className="mt-4">
-              <table>
-                <tbody>
-                  <tr>
-                    <td>
-                      <p className='label'>PT ABC</p>
-                      <p className='label-child'>Latest Update 12/12/2022</p>
-                    </td>
-                    <td className='cta-button text-end'>
-                      <Button label='Edit' buttonType="btn-secondary" />
-                      <Button label='Lihat' buttonType="btn-tertiary" />
-                      <Button label='Hapus' buttonType="btn-quaternary" />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <p className='label'>PT ABC</p>
-                      <p className='label-child'>Latest Update 12/12/2022</p>
-                    </td>
-                    <td className='cta-button text-end'>
-                      <Button label='Edit' buttonType="btn-secondary" />
-                      <Button label='Lihat' buttonType="btn-tertiary" />
-                      <Button label='Hapus' buttonType="btn-quaternary" />
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+            {invoicesList.map(item => {
+              return (
+                <InvoiceItem key={item.id} company={item.company} date={item.latest_update} />
+              )
+            })}
           </div>
 
           <div className="col-1 line-2">

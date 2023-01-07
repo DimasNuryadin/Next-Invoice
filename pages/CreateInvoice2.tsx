@@ -6,6 +6,7 @@ import ButtonShowItem from '../components/molecules/ButtonShowItem'
 import NavBar from '../components/molecules/NavBar'
 import Invoice from '../components/organisms/Invoice'
 import Sidebar from '../components/organisms/Sidebar'
+import axios from 'axios'
 
 export default function CreateInvoice2() {
   const [desc, setDesc] = useState([
@@ -25,7 +26,7 @@ export default function CreateInvoice2() {
   const addLineDescription = () => {
     setDesc([...desc, { description: "", qty: 0, rate: 0 }])
   }
-  const removeLineDescription = (index) => {
+  const removeLineDescription = (index: any) => {
     const list = [...desc]
     list.splice(index, 1)
     setDesc(list)
@@ -35,14 +36,14 @@ export default function CreateInvoice2() {
   const addLineDP = () => {
     setDp([...dp, { date: "", rate: 0 }])
   }
-  const removeLineDP = (index) => {
+  const removeLineDP = (index: any) => {
     const list = [...desc]
     list.splice(index, 1)
     setDp(list)
   }
 
   // Handle Change Dp
-  const handleChangeDesc = (e, index) => {
+  const handleChangeDesc = (e: any, index: any) => {
     const { name, value } = e.target
     const list = [...desc];
     list[index][name] = value;
@@ -50,7 +51,7 @@ export default function CreateInvoice2() {
   }
 
   // Handle Change Dp
-  const handleChangeDp = (e, index) => {
+  const handleChangeDp = (e: any, index: any) => {
     const { name, value } = e.target
     const list = [...dp];
     list[index][name] = value;
@@ -147,7 +148,7 @@ export default function CreateInvoice2() {
                   <div className="col-4"></div>
                   <div className="col-5">
                     <div className="row" >
-                      <button className='col-1 my-auto border-0 bg-transparent' onClick={() => addLineDP(index)}>
+                      <button className='col-1 my-auto border-0 bg-transparent' onClick={() => addLineDP()}>
                         <Image src="/icon/plus-dark.svg" width={10} height={10} alt="Plus Dark" />
                       </button>
                       <p className='col-4 my-auto label text-start'>DP {index + 1}</p>
