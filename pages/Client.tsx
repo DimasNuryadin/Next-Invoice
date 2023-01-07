@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import InvoiceItem from '../components/molecules/InvoiceItem';
 
 export default function Clients() {
-  const [invoicesList, setInvoicesList] = useState([])
+  const [invoicesList, setInvoicesList] = useState<any[]>([])
 
   useEffect(() => {
     const getAllInvoices = async () => {
