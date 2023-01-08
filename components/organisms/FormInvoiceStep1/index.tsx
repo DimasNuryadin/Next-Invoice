@@ -1,9 +1,8 @@
-import Link from "next/link";
 import Button from "../../atoms/Button";
 interface FormInvoiceStep1Props {
-  form: FormObject;
-  setForm: object;
-  onSubmit: React.MouseEventHandler<HTMLButtonElement>;
+  form?: FormObject;
+  setForm?: object;
+  onSubmit?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 interface FormObject {
@@ -14,7 +13,7 @@ interface FormObject {
   due_date: string
 }
 
-export default function FormInvoiceStep1(props: FormInvoiceStep1Props) {
+export default function FormInvoiceStep1(props: Partial<FormInvoiceStep1Props>) {
   const { form, setForm, onSubmit } = props;
 
   return (

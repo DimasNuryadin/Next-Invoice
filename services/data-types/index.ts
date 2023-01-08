@@ -3,3 +3,8 @@ export interface InvoicesListTypes {
   company: string,
   latest_update: string,
 }
+
+export interface LoginTypes {
+  email: string;
+  password: string;
+}
