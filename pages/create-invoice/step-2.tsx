@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
+import { NumericFormat } from 'react-number-format'
 import Button from '../../components/atoms/Button'
 import ButtonShowItem from '../../components/molecules/ButtonShowItem'
 import NavBar from '../../components/molecules/NavBar'
@@ -117,7 +118,15 @@ export default function Step2() {
                       </div>
                     </div>
                     <div className="col-4" >
-                      <p className='float-start my-auto mt-1'>Rp. {data.rate * data.qty}</p>
+                      <p className='float-start my-auto mt-1'>
+                        <NumericFormat
+                          value={data.rate * data.qty}
+                          prefix="Rp. "
+                          displayType="text"
+                          thousandSeparator="."
+                          decimalSeparator=","
+                        />
+                      </p>
                       {desc.length > 1 && (
                         <button className='bg-white float-end border-0 mt-1' onClick={() => removeLineDescription(index)}>X</button>
                       )}
@@ -135,7 +144,15 @@ export default function Step2() {
               <div className='row'>
                 <div className="col-6"></div>
                 <p className='col-2 label text-start'>Subtotal</p>
-                <p className='col-4 label'>Rp. {subTotal}</p>
+                <p className='col-4 label'>
+                  <NumericFormat
+                    value={subTotal}
+                    prefix="Rp. "
+                    displayType="text"
+                    thousandSeparator="."
+                    decimalSeparator=","
+                  />
+                </p>
               </div>
 
               {/* Discount Tax Shipping */}
@@ -203,7 +220,15 @@ export default function Step2() {
               <div className="row mt-3">
                 <div className="col-6"></div>
                 <p className='col-2 label text-start'>Total</p>
-                <p className='col-4 label'>Rp. {total}</p>
+                <p className='col-4 label'>
+                  <NumericFormat
+                    prefix="Rp. "
+                    value={total}
+                    displayType="text"
+                    thousandSeparator="."
+                    decimalSeparator=","
+                  />
+                </p>
               </div>
 
               {/* DP */}
@@ -241,7 +266,15 @@ export default function Step2() {
               <div className="row mt-1">
                 <div className="col-4"></div>
                 <p className='col-4 label'>Sisa</p>
-                <p className='col-4 label'>Rp. XXX.000</p>
+                <p className='col-4 label'>
+                  <NumericFormat
+                    prefix="Rp. "
+                    value={10000}
+                    displayType="text"
+                    thousandSeparator="."
+                    decimalSeparator=","
+                  />
+                </p>
               </div>
             </div>
 

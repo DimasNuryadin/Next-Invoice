@@ -1,4 +1,6 @@
 import Image from 'next/image'
+import { NumericFormat } from 'react-number-format'
+
 interface InvoiceProps {
   alamat_perusahaan: string;
   no_invoice: string;
@@ -73,8 +75,24 @@ export default function Invoice(props: Partial<InvoiceProps>) {
                 <p className='col-1 text-center'>{index + 1}</p>
                 <p className='col-4'>{data.description}</p>
                 <p className='col-1 text-center'>{data.qty}</p>
-                <p className='col-3'>Rp. {data.rate}</p>
-                <p className='col-3'>{data.qty * data.rate}</p>
+                <p className='col-3'>
+                  <NumericFormat
+                    prefix="Rp. "
+                    value={data.rate}
+                    displayType="text"
+                    thousandSeparator="."
+                    decimalSeparator=","
+                  />
+                </p>
+                <p className='col-3'>
+                  <NumericFormat
+                    prefix="Rp. "
+                    value={data.qty * data.rate}
+                    displayType="text"
+                    thousandSeparator="."
+                    decimalSeparator=","
+                  />
+                </p>
               </div>
             )
           })
@@ -84,7 +102,15 @@ export default function Invoice(props: Partial<InvoiceProps>) {
         <div className="row mt-2 subtotal">
           <p className='col-6'></p>
           <p className='col-3 head-table'>SUBTOTAL</p>
-          <p className='col-3 head-table'>Rp {subTotal}</p>
+          <p className='col-3 head-table'>
+            <NumericFormat
+              prefix="Rp. "
+              value={subTotal}
+              displayType="text"
+              thousandSeparator="."
+              decimalSeparator=","
+            />
+          </p>
         </div>
 
         {/* DP */}
@@ -97,7 +123,15 @@ export default function Invoice(props: Partial<InvoiceProps>) {
                 <p className='float-end me-2'>{data.date}</p>
               </div>
               {/* 16 Des 22 */}
-              <p className='col-3'>Rp {data.rate}</p>
+              <p className='col-3'>
+                <NumericFormat
+                  prefix="Rp. "
+                  value={data.rate}
+                  displayType="text"
+                  thousandSeparator="."
+                  decimalSeparator=","
+                />
+              </p>
             </div>
           ))
         )}
@@ -106,7 +140,15 @@ export default function Invoice(props: Partial<InvoiceProps>) {
         <div className="row subtotal">
           <p className='col-6'></p>
           <p className='col-3 head-table'>SISA</p>
-          <p className='col-3 head-table'>Rp 4.000.000</p>
+          <p className='col-3 head-table'>
+            <NumericFormat
+              prefix="Rp. "
+              value={100000}
+              displayType="text"
+              thousandSeparator="."
+              decimalSeparator=","
+            />
+          </p>
         </div>
 
         {/* Payment Instruction */}
