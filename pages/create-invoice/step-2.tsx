@@ -1,16 +1,28 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
-import Button from '../components/atoms/Button'
-import ButtonShowItem from '../components/molecules/ButtonShowItem'
-import NavBar from '../components/molecules/NavBar'
-import Invoice from '../components/organisms/Invoice'
-import Sidebar from '../components/organisms/Sidebar'
-import axios from 'axios'
+import Button from '../../components/atoms/Button'
+import ButtonShowItem from '../../components/molecules/ButtonShowItem'
+import NavBar from '../../components/molecules/NavBar'
+import Invoice from '../../components/organisms/Invoice'
+import Sidebar from '../../components/organisms/Sidebar'
 
-export default function CreateInvoice2() {
+export default function Step2() {
+  const [discount, setDiscount] = useState({
+    active: false,
+    value: 0,
+  })
+  const [tax, setTax] = useState({
+    active: false,
+    value: 0,
+  })
+  const [shipping, setShipping] = useState({
+    active: false,
+    value: 0,
+  })
+
   const [desc, setDesc] = useState([
-    { description: "", qty: 0, rate: 0 },
+    { description: "", qty: 1, rate: 0 },
   ])
   const [dp, setDp] = useState([
     {
@@ -18,13 +30,12 @@ export default function CreateInvoice2() {
       rate: 0,
     }
   ])
-
   // console.log("desc :", desc)
   // console.log("dp :", dp)
 
   // Line Item Description
   const addLineDescription = () => {
-    setDesc([...desc, { description: "", qty: 0, rate: 0 }])
+    setDesc([...desc, { description: "", qty: 1, rate: 0 }])
   }
   const removeLineDescription = (index: any) => {
     const list = [...desc]
@@ -37,12 +48,12 @@ export default function CreateInvoice2() {
     setDp([...dp, { date: "", rate: 0 }])
   }
   const removeLineDP = (index: any) => {
-    const list = [...desc]
+    const list = [...dp]
     list.splice(index, 1)
     setDp(list)
   }
 
-  // Handle Change Dp
+  // Handle Change Desc
   const handleChangeDesc = (e: any, index: any) => {
     const { name, value } = e.target
     const list = [...desc];
@@ -57,6 +68,21 @@ export default function CreateInvoice2() {
     list[index][name] = value;
     setDp(list)
   }
+
+  // Subtotal
+  let subTotal1 = desc.map(x => x.qty * x.rate)
+  // console.log("Amount :", subTotal1)
+  const subTotal = subTotal1.reduce(subTotalFunction)
+  function subTotalFunction(total: number, value: number) {
+    return total + value;
+  }
+  // console.log("sub total :", subTotal)
+
+  // Total
+  let totalDisc = subTotal * (10 / 100);
+  let totalTax = subTotal * (10 / 100);
+  let totalShipping = 0;
+  let total = subTotal - totalDisc - totalTax - totalShipping;
 
   return (
     <div className='invoice-page'>
@@ -97,7 +123,7 @@ export default function CreateInvoice2() {
                       )}
                     </div>
                   </div>
-                  {desc.length - 1 === index && (
+                  {desc.length - 1 === index && desc.length < 10 && (
                     <Button buttonType="btn-secondary" label="Line Item" icon="plus" size="medium" active onClick={addLineDescription} />
                   )}
                 </div>
@@ -109,49 +135,91 @@ export default function CreateInvoice2() {
               <div className='row'>
                 <div className="col-6"></div>
                 <p className='col-2 label text-start'>Subtotal</p>
-                <p className='col-4 label'>Rp. 250.000</p>
+                <p className='col-4 label'>Rp. {subTotal}</p>
               </div>
 
               {/* Discount Tax Shipping */}
               <div>
-                <ButtonShowItem label='Discount' />
-                <ButtonShowItem label='Tax' />
-                <ButtonShowItem label='Shipping' />
+                <ButtonShowItem label='Discount' onClick={() => setDiscount({ active: true, value: 0 })} />
+                <ButtonShowItem label='Tax' onClick={() => setTax({ active: true, value: 0 })} />
+                <ButtonShowItem label='Shipping' onClick={() => setShipping({ active: true, value: 0 })} />
               </div>
 
-              <div className="row mt-1">
-                <div className="col-6"></div>
-                <p className="col-2 my-auto label text-start">
-                  Disc
-                </p>
-                <div className="col-3">
-                  <div className="input-group float-start my-auto mt-1">
-                    <input type="text" className="form-control border-end-0" id='disc' style={{ padding: '0px 2px' }} />
-                    <label className="input-group-text bg-white border-none" style={{ fontSize: 15 }} htmlFor="disc" >%</label>
+              {discount.active && (
+                <div className="row mt-1">
+                  <div className="col-6"></div>
+                  <p className="col-2 my-auto label text-start">
+                    Disc
+                  </p>
+                  <div className="col-3">
+                    <div className="input-group float-start my-auto mt-1">
+                      <input type="text" className="form-control border-end-0" id='disc' style={{ padding: '0px 2px' }} />
+                      <label className="input-group-text bg-white border-none" style={{ fontSize: 15 }} htmlFor="disc" >%</label>
+                    </div>
+                  </div>
+                  <div className='col-1 my-auto'>
+                    <button className='bg-white float-end border-0 mt-1' onClick={() => setDiscount({ active: false, value: 0 })}>X</button>
                   </div>
                 </div>
-                <div className='col-1 my-auto'>
-                  <button className='bg-white float-end border-0 mt-1'>X</button>
+              )}
+
+              {tax.active && (
+                <div className="row mt-1">
+                  <div className="col-6"></div>
+                  <p className="col-2 my-auto label text-start">
+                    Tax
+                  </p>
+                  <div className="col-3">
+                    <div className="input-group float-start my-auto mt-1">
+                      <input type="text" className="form-control border-end-0" id='disc' style={{ padding: '0px 2px' }} />
+                      <label className="input-group-text bg-white border-none" style={{ fontSize: 15 }} htmlFor="disc" >%</label>
+                    </div>
+                  </div>
+                  <div className='col-1 my-auto'>
+                    <button className='bg-white float-end border-0 mt-1' onClick={() => setTax({ active: false, value: 0 })}>X</button>
+                  </div>
                 </div>
-              </div>
+              )}
+
+              {shipping.active && (
+                <div className="row mt-1">
+                  <div className="col-6"></div>
+                  <p className="col-2 my-auto label text-start">
+                    Shipping
+                  </p>
+                  <div className="col-3">
+                    <div className="input-group float-start my-auto mt-1">
+                      <input type="text" className="form-control border-end-0" id='disc' style={{ padding: '0px 2px' }} />
+                      <label className="input-group-text bg-white border-none" style={{ fontSize: 15 }} htmlFor="disc" >%</label>
+                    </div>
+                  </div>
+                  <div className='col-1 my-auto'>
+                    <button className='bg-white float-end border-0 mt-1' onClick={() => setShipping({ active: false, value: 0 })}>X</button>
+                  </div>
+                </div>
+              )}
 
               {/* Total */}
               <div className="row mt-3">
                 <div className="col-6"></div>
                 <p className='col-2 label text-start'>Total</p>
-                <p className='col-4 label'>Rp. 250.000</p>
+                <p className='col-4 label'>Rp. {total}</p>
               </div>
 
               {/* DP */}
               {dp.map((data, index) => (
                 <div className="row mb-2" key={index}>
-                  <div className="col-4"></div>
+                  <div className="col-3"></div>
                   <div className="col-5">
                     <div className="row" >
-                      <button className='col-1 my-auto border-0 bg-transparent' onClick={() => addLineDP()}>
-                        <Image src="/icon/plus-dark.svg" width={10} height={10} alt="Plus Dark" />
-                      </button>
-                      <p className='col-4 my-auto label text-start'>DP {index + 1}</p>
+                      <div className='col-1 my-auto'>
+                        {dp.length - 1 === index && dp.length < 10 && (
+                          <button className='border-0 bg-transparent' onClick={() => addLineDP()}>
+                            <Image src="/icon/plus-dark.svg" width={10} height={10} alt="Plus Dark" />
+                          </button>
+                        )}
+                      </div>
+                      <p className='col-4 my-auto label text-start' style={{ width: 70 }}>DP {index + 1}</p>
                       <input className="form-control col" type="date" id="Due Date" name="date" value={data.date} onChange={(e) => handleChangeDp(e, index)} required />
                     </div>
                   </div>
@@ -161,6 +229,11 @@ export default function CreateInvoice2() {
                       <input type="text" className="form-control border-start-0" style={{ padding: '0px 2px' }} id="dp1" name="rate" value={data.rate} onChange={(e) => handleChangeDp(e, index)} />
                     </div>
                   </div>
+                  {dp.length > 1 && (
+                    <div className='col-1 my-auto'>
+                      <button className='bg-white float-end border-0 mt-1' onClick={removeLineDP}>X</button>
+                    </div>
+                  )}
                 </div>
               ))}
 
@@ -181,18 +254,20 @@ export default function CreateInvoice2() {
               <div className="col-5"></div>
             </div>
 
-            {/* Button Submit */}
-            <div className='mt-4 text-end' style={{ backgroundColor: 'red' }}>
+            <div className='mt-4'>
               {/* Bug di Link */}
-              <Link href="/CreateInvoice2" >
+              <Link href="/CreateInvoice/Step2" className='float-end ms-4'>
                 <Button buttonType="btn-primary" label="Submit" />
+              </Link>
+              <Link href="/CreateInvoice" className='float-end' >
+                <Button buttonType="btn-secondary" label="Back" />
               </Link>
             </div>
             <br /><br />
           </div>
 
           {/* Invoice */}
-          <Invoice desc={desc} dp={dp} />
+          <Invoice desc={desc} dp={dp} subTotal={subTotal} />
         </div>
       </div>
     </div>

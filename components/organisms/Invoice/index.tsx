@@ -1,7 +1,13 @@
 import Image from 'next/image'
 interface InvoiceProps {
+  alamat_perusahaan: string;
+  no_invoice: string;
+  company: string;
+  invoice_date: string;
+  due_date: string;
   desc?: Desc[];
   dp?: Dp[];
+  subTotal?: number;
 }
 
 interface Desc {
@@ -16,7 +22,7 @@ interface Dp {
 }
 
 export default function Invoice(props: Partial<InvoiceProps>) {
-  const { desc, dp } = props;
+  const { desc, dp, subTotal, alamat_perusahaan, no_invoice, company, invoice_date, due_date } = props;
   const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
 
   // const coba = dp[0].date;
@@ -31,10 +37,7 @@ export default function Invoice(props: Partial<InvoiceProps>) {
           <div className="col cek">
             <Image src="/img/logo-3.png" width={160} height={40} alt="Logo Kamojang" />
             <p className='mt-3 invoice-address'>
-              Jl. Raya Kamojang No. 74 RT. 03 RW. 06
-              Ds. Laksana Kec. Ibun Kab. Bandung
-              Mobile : 08123456789
-              /n Email : contoh@email.com
+              {alamat_perusahaan}
             </p>
           </div>
           <p className="col text-end invoice-title">
@@ -45,12 +48,12 @@ export default function Invoice(props: Partial<InvoiceProps>) {
         <div className="row bill-information">
           <div className="col">
             <p className='head-table'>Bill To :</p>
-            <p className='bill'>PT ABC</p>
+            <p className='bill'>{company}</p>
           </div>
           <div className="col text-end">
-            <p className='head-table'>Invoice No : KMD/.../...-...</p>
-            <p className='bill'>Invoice Date : 12 Des 2022</p>
-            <p className='bill'>Due Date :  12 Des 2022</p>
+            <p className='head-table'>Invoice No : {no_invoice}</p>
+            <p className='bill'>Invoice Date : {invoice_date}</p>
+            <p className='bill'>Due Date :  {due_date}</p>
           </div>
         </div>
         <br />
@@ -81,7 +84,7 @@ export default function Invoice(props: Partial<InvoiceProps>) {
         <div className="row mt-2 subtotal">
           <p className='col-6'></p>
           <p className='col-3 head-table'>SUBTOTAL</p>
-          <p className='col-3 head-table'>Rp 5.000.000</p>
+          <p className='col-3 head-table'>Rp {subTotal}</p>
         </div>
 
         {/* DP */}
@@ -93,19 +96,11 @@ export default function Invoice(props: Partial<InvoiceProps>) {
                 <p className='head-table float-start' >DP {index + 1}</p>
                 <p className='float-end me-2'>{data.date}</p>
               </div>
+              {/* 16 Des 22 */}
               <p className='col-3'>Rp {data.rate}</p>
             </div>
           ))
         )}
-
-        <div className="row dp">
-          <p className='col-6'></p>
-          <div className='col-3'>
-            <p className='head-table float-start' >DP 2</p>
-            <p className='float-end me-2'>16 Des 22</p>
-          </div>
-          <p className='col-3'>Rp 1.000.000</p>
-        </div>
 
         {/* Sisa */}
         <div className="row subtotal">

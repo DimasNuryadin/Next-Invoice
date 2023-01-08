@@ -13,7 +13,7 @@ export default function Home() {
           <InputLogin type="email" pic="email" placeholder="Email" />
           <InputLogin type="password" pic="key" placeholder="Password" />
           <div className="mt-5" >
-            <Link href="/CreateInvoice1">
+            <Link href="/create-invoice">
               <Button buttonType="btn-primary" label="Submit" />
             </Link>
           </div>

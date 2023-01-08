@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Button from "../../atoms/Button";
 
-export default function FormInvoice1() {
+export default function FormInvoiceStep1() {
   return (
     <div className='col-6 create-invoice'>
       <h2 className='title-2'>CREATE INVOICES</h2>
@@ -27,8 +27,8 @@ export default function FormInvoice1() {
         </div>
 
         {/* Button Next Page */}
-        <div className='mt-4 text-end'>
-          <Link href="/CreateInvoice2">
+        <div className='mt-4' style={{ backgroundColor: 'red' }}>
+          <Link href="/create-invoice/step-2" className="float-end">
             <Button buttonType="btn-primary" label="Next Page" />
           </Link>
         </div>

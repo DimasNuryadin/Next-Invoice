@@ -1,8 +1,7 @@
-import NavBar from '../components/molecules/NavBar'
-import FormInvoice1 from '../components/organisms/FormInvoice1'
-import Invoice from '../components/organisms/Invoice'
-import Sidebar from '../components/organisms/Sidebar'
-import axios from 'axios'
+import NavBar from '../../components/molecules/NavBar'
+import FormInvoiceStep1 from '../../components/organisms/FormInvoiceStep1'
+import Invoice from '../../components/organisms/Invoice'
+import Sidebar from '../../components/organisms/Sidebar'
 
 export default function CreateInvoice1() {
 
@@ -12,7 +11,7 @@ export default function CreateInvoice1() {
       <div className='dashboard'>
         <NavBar />
         <div className='row mt-5 pt-4'>
-          <FormInvoice1 />
+          <FormInvoiceStep1 />
 
           {/* Invoice */}
           <Invoice />
