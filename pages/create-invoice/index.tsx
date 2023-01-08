@@ -4,17 +4,21 @@ import FormInvoiceStep1 from '../../components/organisms/FormInvoiceStep1'
 import Invoice from '../../components/organisms/Invoice'
 import Sidebar from '../../components/organisms/Sidebar'
 import { useForm } from '../../services/utils/useForm';
+import moment from 'moment';
 
 export default function CreateInvoice() {
   const [form, setForm] = useForm({
     alamat_perusahaan: '',
     no_invoice: '',
     company: '',
-    invoice_date: '',
-    due_date: ''
+    invoice_date: new Date(),
+    due_date: new Date()
   });
 
   const router = useRouter();
+
+  // const today = new Date()
+  // console.log(today.getDate())
 
   const onSubmit = () => {
     console.log("form :", form)
@@ -37,8 +41,8 @@ export default function CreateInvoice() {
             alamat_perusahaan={form.alamat_perusahaan}
             no_invoice={form.no_invoice}
             company={form.company}
-            invoice_date={form.invoice_date}
-            due_date={form.due_date}
+            invoice_date={moment(form.invoice_date).format('DD MMM YY')}
+            due_date={moment(form.due_date).format('DD MMM YY')}
           />
         </div>
       </div>

@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import { NumericFormat } from 'react-number-format'
+import moment from 'moment';
 
 interface InvoiceProps {
   alamat_perusahaan: string;
@@ -120,7 +121,7 @@ export default function Invoice(props: Partial<InvoiceProps>) {
               <p className='col-6'></p>
               <div className='col-3'>
                 <p className='head-table float-start' >DP {index + 1}</p>
-                <p className='float-end me-2'>{data.date}</p>
+                <p className='float-end me-2'>{moment(data.date).format('DD MMM YY')}</p>
               </div>
               {/* 16 Des 22 */}
               <p className='col-3'>
