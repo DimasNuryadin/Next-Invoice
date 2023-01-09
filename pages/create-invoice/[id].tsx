@@ -3,7 +3,7 @@ import NavBar from '../../components/molecules/NavBar'
 import FormInvoiceStep1 from '../../components/organisms/FormInvoiceStep1'
 import Invoice from '../../components/organisms/Invoice'
 import Sidebar from '../../components/organisms/Sidebar'
-import { updateInvoices } from '../../services/user';
+import { updateInvoicesStep1 } from '../../services/user';
 import { useEffect, useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -38,7 +38,7 @@ export default function EditInvoiceStep1() {
       due_date,
     }
 
-    const response = await updateInvoices(form, query.id)
+    const response = await updateInvoicesStep1(form, query.id)
     if (response.error) {
       toast.error(response.message)
     } else {

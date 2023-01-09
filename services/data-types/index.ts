@@ -15,5 +15,24 @@ export interface FormInvoicesStep1 {
   company: string;
   invoice_date: Date;
   due_date: Date;
-  payment_instruction: string; 
+}
+
+export interface FormInvoicesStep2 {
+  payment_instruction: string;
+  discount: number;
+  tax: number;
+  shipping: number;
+}
+
+export interface FormDescription {
+  id_invoices: number;
+  description: string;
+  qty: number;
+  rate: number;
+}
+
+export interface FormDownPayment {
+  id_invoices: number;
+  date: Date;
+  rate: number;
 }

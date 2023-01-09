@@ -38,8 +38,8 @@ export default function FormInvoiceStep1(props: Partial<FormInvoiceStep1Props>) 
           id="Alamat Perusahaan"
           rows={3}
           value={alamat_perusahaan}
-          onChange={(event) => setAlamat_perusahaan(event.target.value)}>
-        </textarea>
+          onChange={(event) => setAlamat_perusahaan(event.target.value)}
+        />
         <br />
         <label htmlFor="Invoice No" className="form-label label">Invoice No</label>
         <input

@@ -8,6 +8,9 @@ import ButtonShowItem from '../../../components/molecules/ButtonShowItem'
 import NavBar from '../../../components/molecules/NavBar'
 import Invoice from '../../../components/organisms/Invoice'
 import Sidebar from '../../../components/organisms/Sidebar'
+import { createDescription, createDownPayment, updateInvoicesStep2 } from '../../../services/user';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Step2() {
   // Ambil data dari paramas
@@ -16,9 +19,11 @@ export default function Step2() {
     alamat_perusahaan: '',
     no_invoice: '',
     company: '',
-    invoice_date: '',
-    due_date: ''
+    invoice_date: new Date,
+    due_date: new Date
   })
+  const [payment_instruction, setPayment_instruction] = useState('')
+
   const [discount, setDiscount] = useState({
     active: false,
     value: 0,
@@ -33,11 +38,12 @@ export default function Step2() {
   })
 
   const [desc, setDesc] = useState([
-    { description: "", qty: 1, rate: 0 },
+    { id_invoices: 0, description: "", qty: 1, rate: 0 },
   ])
   const [dp, setDp] = useState([
     {
-      date: "",
+      id_invoices: 0,
+      date: new Date,
       rate: 0,
     }
   ])
@@ -102,6 +108,37 @@ export default function Step2() {
   let totalTax = subTotal * (10 / 100);
   let totalShipping = 0;
   let total = subTotal - totalDisc - totalTax - totalShipping;
+
+  const onSubmit = async () => {
+    const invoicesForm = {
+      payment_instruction,
+      discount: discount.value,
+      tax: tax.value,
+      shipping: shipping.value
+    }
+    // console.log("invoices : ", invoicesForm)
+    if (!payment_instruction) {
+      toast.error('Payment Instruction wajib diisi!!')
+    } else {
+      const response = await updateInvoicesStep2(invoicesForm, query.id)
+
+      desc.forEach(async (x) => {
+        x.id_invoices = Number(query.id)
+        await createDescription(x);
+      })
+
+      dp.forEach(async (x) => {
+        x.id_invoices = Number(query.id)
+        await createDownPayment(x);
+      })
+
+      if (response.error) {
+        toast.error(response.message)
+      } else {
+        toast.success("Berhasil tambah data")
+      }
+    }
+  }
 
   return (
     <div className='invoice-page'>
@@ -188,7 +225,7 @@ export default function Step2() {
                   </p>
                   <div className="col-3">
                     <div className="input-group float-start my-auto mt-1">
-                      <input type="text" className="form-control border-end-0" id='disc' style={{ padding: '0px 2px' }} />
+                      <input type="text" className="form-control border-end-0" id='disc' style={{ padding: '0px 2px' }} value={discount.value} onChange={(event) => setDiscount({ active: true, value: Number(event.target.value) })} />
                       <label className="input-group-text bg-white border-none" style={{ fontSize: 15 }} htmlFor="disc" >%</label>
                     </div>
                   </div>
@@ -206,8 +243,8 @@ export default function Step2() {
                   </p>
                   <div className="col-3">
                     <div className="input-group float-start my-auto mt-1">
-                      <input type="text" className="form-control border-end-0" id='disc' style={{ padding: '0px 2px' }} />
-                      <label className="input-group-text bg-white border-none" style={{ fontSize: 15 }} htmlFor="disc" >%</label>
+                      <input type="text" className="form-control border-end-0" id='tax' style={{ padding: '0px 2px' }} value={tax.value} onChange={(event) => setTax({ active: true, value: Number(event.target.value) })} />
+                      <label className="input-group-text bg-white border-none" style={{ fontSize: 15 }} htmlFor="tax" >%</label>
                     </div>
                   </div>
                   <div className='col-1 my-auto'>
@@ -224,8 +261,8 @@ export default function Step2() {
                   </p>
                   <div className="col-3">
                     <div className="input-group float-start my-auto mt-1">
-                      <input type="text" className="form-control border-end-0" id='disc' style={{ padding: '0px 2px' }} />
-                      <label className="input-group-text bg-white border-none" style={{ fontSize: 15 }} htmlFor="disc" >%</label>
+                      <input type="text" className="form-control border-end-0" id='shipping' style={{ padding: '0px 2px' }} value={shipping.value} onChange={(event) => setShipping({ active: true, value: Number(event.target.value) })} />
+                      <label className="input-group-text bg-white border-none" style={{ fontSize: 15 }} htmlFor="shipping" >%</label>
                     </div>
                   </div>
                   <div className='col-1 my-auto'>
@@ -300,15 +337,21 @@ export default function Step2() {
             <div className='row'>
               <div className="col-7">
                 <label htmlFor="Alamat Perusahaan" className="form-label label">Payments Instructions</label>
-                <textarea className="form-control" id="Alamat Perusahaan" rows={4}></textarea>
+                <textarea
+                  className="form-control"
+                  id="Alamat Perusahaan"
+                  rows={4}
+                  value={payment_instruction}
+                  onChange={(event) => setPayment_instruction(event.target.value)}
+                />
               </div>
               <div className="col-5"></div>
             </div>
 
             <div className='mt-4'>
-              <Link href={`/create-invoice/${query.id}`} className='float-end ms-4'>
-                <Button buttonType="btn-primary" label="Submit" />
-              </Link>
+              <div className='float-end ms-4'>
+                <Button buttonType="btn-primary" label="Submit" onClick={onSubmit} />
+              </div>
               <Link href={`/create-invoice/${query.id}`} className='float-end' >
                 <Button buttonType="btn-secondary" label="Back" />
               </Link>
@@ -326,8 +369,10 @@ export default function Step2() {
             company={dataStep1.company}
             invoice_date={dataStep1.invoice_date}
             due_date={dataStep1.due_date}
+            payment_instruction={payment_instruction}
           />
         </div>
+        <ToastContainer />
       </div>
     </div>
   )

@@ -8,6 +8,7 @@ interface InvoiceProps {
   company: string;
   invoice_date: Date;
   due_date: Date;
+  payment_instruction: string;
   desc?: Desc[];
   dp?: Dp[];
   subTotal?: number;
@@ -25,7 +26,17 @@ interface Dp {
 }
 
 export default function Invoice(props: Partial<InvoiceProps>) {
-  const { desc, dp, subTotal, alamat_perusahaan, no_invoice, company, invoice_date, due_date } = props;
+  const {
+    desc,
+    dp,
+    subTotal,
+    alamat_perusahaan,
+    no_invoice,
+    company,
+    invoice_date,
+    due_date,
+    payment_instruction,
+  } = props;
 
   return (
     <div className='col-6'>
@@ -149,14 +160,7 @@ export default function Invoice(props: Partial<InvoiceProps>) {
         {/* Payment Instruction */}
         <div className="payment-isntructions">
           <p className='head-table'>Payments Instructions</p>
-          <p className='invoice-address'>
-            Pembayaran melalui rekening :
-
-            PT KAMOJANG MANDIRI
-            BANK MANDIRI
-            A/C No. 1310001204009
-            REK. DOLLAR PT KAMOJANG MANDIRI
-            No. 131-00-1967023-3</p>
+          <p className='invoice-address'>{payment_instruction}</p>
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import callApi from '../config/api';
-import { FormInvoicesStep1 } from './data-types';
+import { FormDescription, FormDownPayment, FormInvoicesStep1, FormInvoicesStep2 } from './data-types';
 const ROOT_API = process.env.NEXT_PUBLIC_API;
 
 export async function getAllInvoices() {
@@ -31,8 +31,18 @@ export async function createInvoices(data: FormInvoicesStep1) {
   })
 }
 
-export async function updateInvoices(data: FormInvoicesStep1, id: any) {
-  const url = `http://localhost:4000/invoices/${id}`
+export async function updateInvoicesStep1(data: FormInvoicesStep1, id: any) {
+  const url = `${ROOT_API}/invoices/step-1/${id}`
+
+  return callApi({
+    url,
+    method: 'PATCH',
+    data: data,
+  })
+}
+
+export async function updateInvoicesStep2(data: FormInvoicesStep2, id: any) {
+  const url = `${ROOT_API}/invoices/step-2/${id}`
 
   return callApi({
     url,
@@ -43,4 +53,24 @@ export async function updateInvoices(data: FormInvoicesStep1, id: any) {
 
 export async function getDescription() {
   return null;
+}
+
+export async function createDescription(data: FormDescription) {
+  const url = `${ROOT_API}/descriptions`;
+
+  return callApi({
+    url,
+    method: 'POST',
+    data: data
+  })
+}
+
+export async function createDownPayment(data: FormDownPayment) {
+  const url = `${ROOT_API}/down_payments`
+
+  return callApi({
+    url,
+    method: 'POST',
+    data: data
+  })
 }
