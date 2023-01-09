@@ -49,3 +49,23 @@ export default function CreateInvoice() {
     </div>
   )
 }
+
+// Server side rendering
+export async function getServerSideProps({ req }) {
+  const { token } = req.cookies
+  if (!token) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      }
+    }
+  }
+
+  // console.log("token: ", token)
+  return {
+    props: {
+      user: {},
+    }
+  }
+}

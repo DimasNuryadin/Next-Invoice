@@ -2,15 +2,23 @@ import Image from "next/image"
 import Button from "../components/atoms/Button"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { setLogin } from "../services/auth";
 import { useRouter } from "next/router";
+import Cookies from 'js-cookie'
 
 export default function Home() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
   const router = useRouter()
+
+  useEffect(() => {
+    const token = Cookies.get('token')
+    if (token) {
+      router.push('/create-invoice')
+    }
+  }, [router])
 
   const onSubmit = async () => {
     const data = {
@@ -25,8 +33,12 @@ export default function Home() {
         toast.error(response.message)
       } else {
         toast.success("Login Berhasil")
+        const token = response.data.token
+        // console.log("token :", token)
+        const tokenBase64 = btoa(token);
+        // console.log("Base 64 : ", tokenBase64)
+        Cookies.set('token', tokenBase64, { expires: 1 })
         router.push('/create-invoice');
-        console.log("Respons", response)
       }
     }
   }
