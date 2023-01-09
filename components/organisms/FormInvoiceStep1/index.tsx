@@ -1,20 +1,32 @@
 import Button from "../../atoms/Button";
 interface FormInvoiceStep1Props {
-  form?: FormObject;
-  setForm?: object;
-  onSubmit?: React.MouseEventHandler<HTMLButtonElement>;
-}
-
-interface FormObject {
   alamat_perusahaan: string,
   no_invoice: string,
   company: string,
-  invoice_date: string,
-  due_date: string
+  invoice_date: Date,
+  due_date: Date,
+  setAlamat_perusahaan: (alamat_perusahaan: string) => void;
+  setNo_invoice: (no_invoice: string) => void;
+  setCompany: (company: string) => void;
+  setInvoice_date: (invoice_date: Date) => void;
+  setDue_date: (due_date: Date) => void;
+  onSubmit?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 export default function FormInvoiceStep1(props: Partial<FormInvoiceStep1Props>) {
-  const { form, setForm, onSubmit } = props;
+  const {
+    alamat_perusahaan,
+    no_invoice,
+    company,
+    invoice_date,
+    due_date,
+    setAlamat_perusahaan,
+    setNo_invoice,
+    setCompany,
+    setInvoice_date,
+    setDue_date,
+    onSubmit
+  } = props;
 
   return (
     <div className='col-6 create-invoice'>
@@ -25,8 +37,8 @@ export default function FormInvoiceStep1(props: Partial<FormInvoiceStep1Props>) 
           className="form-control"
           id="Alamat Perusahaan"
           rows={3}
-          value={form.alamat_perusahaan}
-          onChange={(event) => setForm('alamat_perusahaan', event.target.value)}>
+          value={alamat_perusahaan}
+          onChange={(event) => setAlamat_perusahaan(event.target.value)}>
         </textarea>
         <br />
         <label htmlFor="Invoice No" className="form-label label">Invoice No</label>
@@ -34,8 +46,8 @@ export default function FormInvoiceStep1(props: Partial<FormInvoiceStep1Props>) 
           className="form-control"
           type="text"
           id="Invoice No"
-          value={form.no_invoice}
-          onChange={(event) => setForm('no_invoice', event.target.value)}
+          value={no_invoice}
+          onChange={(event) => setNo_invoice(event.target.value)}
         />
         <br />
         <label htmlFor="Bill to" className="form-label label">Bill to</label>
@@ -43,8 +55,8 @@ export default function FormInvoiceStep1(props: Partial<FormInvoiceStep1Props>) 
           className="form-control"
           type="text"
           id="Bill to"
-          value={form.company}
-          onChange={(event) => setForm('company', event.target.value)}
+          value={company}
+          onChange={(event) => setCompany(event.target.value)}
         />
         <br />
         <div className="row">
@@ -54,8 +66,8 @@ export default function FormInvoiceStep1(props: Partial<FormInvoiceStep1Props>) 
               className="form-control"
               type="date"
               id="Invoice Date"
-              value={form.invoice_date}
-              onChange={(event) => setForm('invoice_date', event.target.value)}
+              value={invoice_date}
+              onChange={(event) => setInvoice_date(event.target.value)}
             />
           </div>
           <div className="col">
@@ -64,8 +76,8 @@ export default function FormInvoiceStep1(props: Partial<FormInvoiceStep1Props>) 
               className="form-control"
               type="date"
               id="Due Date"
-              value={form.due_date}
-              onChange={(event) => setForm('due_date', event.target.value)}
+              value={due_date}
+              onChange={(event) => setDue_date(event.target.value)}
             />
           </div>
         </div>

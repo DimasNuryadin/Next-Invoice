@@ -37,7 +37,7 @@ export default function Home() {
         // console.log("token :", token)
         const tokenBase64 = btoa(token);
         // console.log("Base 64 : ", tokenBase64)
-        Cookies.set('token', tokenBase64, { expires: 1 })
+        Cookies.set('token', tokenBase64, { expires: 1 }) // 1 day
         router.push('/create-invoice');
       }
     }

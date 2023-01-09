@@ -6,8 +6,8 @@ interface InvoiceProps {
   alamat_perusahaan: string;
   no_invoice: string;
   company: string;
-  invoice_date: string;
-  due_date: string;
+  invoice_date: Date;
+  due_date: Date;
   desc?: Desc[];
   dp?: Dp[];
   subTotal?: number;
@@ -20,18 +20,12 @@ interface Desc {
 }
 
 interface Dp {
-  date: string;
+  date: Date;
   rate: number;
 }
 
 export default function Invoice(props: Partial<InvoiceProps>) {
   const { desc, dp, subTotal, alamat_perusahaan, no_invoice, company, invoice_date, due_date } = props;
-  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
-
-  // const coba = dp[0].date;
-  // const month = coba.getUTCDate()
-
-  // console.log("coba :", coba)
 
   return (
     <div className='col-6'>
@@ -55,8 +49,8 @@ export default function Invoice(props: Partial<InvoiceProps>) {
           </div>
           <div className="col text-end">
             <p className='head-table'>Invoice No : {no_invoice}</p>
-            <p className='bill'>Invoice Date : {invoice_date}</p>
-            <p className='bill'>Due Date :  {due_date}</p>
+            <p className='bill'>Invoice Date : {moment(invoice_date).format('DD MMM YY')}</p>
+            <p className='bill'>Due Date :  {moment(due_date).format('DD MMM YY')}</p>
           </div>
         </div>
         <br />

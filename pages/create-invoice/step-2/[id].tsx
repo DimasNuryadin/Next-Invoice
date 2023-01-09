@@ -1,14 +1,24 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useRouter } from 'next/router'
+import { useState, useEffect } from 'react'
 import { NumericFormat } from 'react-number-format'
-import Button from '../../components/atoms/Button'
-import ButtonShowItem from '../../components/molecules/ButtonShowItem'
-import NavBar from '../../components/molecules/NavBar'
-import Invoice from '../../components/organisms/Invoice'
-import Sidebar from '../../components/organisms/Sidebar'
+import Button from '../../../components/atoms/Button'
+import ButtonShowItem from '../../../components/molecules/ButtonShowItem'
+import NavBar from '../../../components/molecules/NavBar'
+import Invoice from '../../../components/organisms/Invoice'
+import Sidebar from '../../../components/organisms/Sidebar'
 
 export default function Step2() {
+  // Ambil data dari paramas
+  const { query } = useRouter();
+  const [dataStep1, setDataStep1] = useState({
+    alamat_perusahaan: '',
+    no_invoice: '',
+    company: '',
+    invoice_date: '',
+    due_date: ''
+  })
   const [discount, setDiscount] = useState({
     active: false,
     value: 0,
@@ -33,6 +43,14 @@ export default function Step2() {
   ])
   // console.log("desc :", desc)
   // console.log("dp :", dp)
+
+  // Get data Step-1
+  useEffect(() => {
+    const localStep1 = localStorage.getItem('step-1')
+    const dataStep1 = JSON.parse(localStep1)
+    setDataStep1(dataStep1);
+    // console.log("local : ", dataStep1)
+  }, [])
 
   // Line Item Description
   const addLineDescription = () => {
@@ -288,11 +306,10 @@ export default function Step2() {
             </div>
 
             <div className='mt-4'>
-              {/* Bug di Link */}
-              <Link href="/CreateInvoice/Step2" className='float-end ms-4'>
+              <Link href={`/create-invoice/${query.id}`} className='float-end ms-4'>
                 <Button buttonType="btn-primary" label="Submit" />
               </Link>
-              <Link href="/CreateInvoice" className='float-end' >
+              <Link href={`/create-invoice/${query.id}`} className='float-end' >
                 <Button buttonType="btn-secondary" label="Back" />
               </Link>
             </div>
@@ -300,7 +317,16 @@ export default function Step2() {
           </div>
 
           {/* Invoice */}
-          <Invoice desc={desc} dp={dp} subTotal={subTotal} />
+          <Invoice
+            desc={desc}
+            dp={dp}
+            subTotal={subTotal}
+            alamat_perusahaan={dataStep1.alamat_perusahaan}
+            no_invoice={dataStep1.no_invoice}
+            company={dataStep1.company}
+            invoice_date={dataStep1.invoice_date}
+            due_date={dataStep1.due_date}
+          />
         </div>
       </div>
     </div>

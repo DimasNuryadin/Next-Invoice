@@ -3,12 +3,14 @@ import NavBar from '../../components/molecules/NavBar'
 import FormInvoiceStep1 from '../../components/organisms/FormInvoiceStep1'
 import Invoice from '../../components/organisms/Invoice'
 import Sidebar from '../../components/organisms/Sidebar'
-import { createInvoices } from '../../services/user';
-import { useState } from 'react';
+import { updateInvoices } from '../../services/user';
+import { useEffect, useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-export default function CreateInvoice() {
+export default function EditInvoiceStep1() {
+  const { query } = useRouter();
+
   const [alamat_perusahaan, setAlamat_perusahaan] = useState('')
   const [no_invoice, setNo_invoice] = useState('')
   const [company, setCompany] = useState('')
@@ -17,7 +19,15 @@ export default function CreateInvoice() {
 
   const router = useRouter();
 
-  // console.log("Form : ", form)
+  useEffect(() => {
+    const dataLocal = localStorage.getItem('step-1')
+    const data = JSON.parse(dataLocal)
+    setAlamat_perusahaan(data.alamat_perusahaan)
+    setNo_invoice(data.no_invoice)
+    setCompany(data.company)
+    setInvoice_date(data.invoice_date)
+    setDue_date(data.due_date)
+  }, [])
 
   const onSubmit = async () => {
     const form = {
@@ -28,16 +38,15 @@ export default function CreateInvoice() {
       due_date,
     }
 
-    if (!alamat_perusahaan || !no_invoice || !company || !invoice_date || !due_date) {
-      toast.error("Data tidak boleh kosong");
+    const response = await updateInvoices(form, query.id)
+    if (response.error) {
+      toast.error(response.message)
     } else {
-      const response = await createInvoices(form)
-      // console.log("data :", response.data.data)
-      const id = response.data.data.id;
-      localStorage.setItem('step-1', JSON.stringify(response.data.data))
-      router.push(`/create-invoice/step-2/${id}`)
+      toast.error("Berhasil ubah data")
+      localStorage.setItem('step-1', JSON.stringify(form))
+      router.push(`/create-invoice/step-2/${query.id}`)
     }
-
+    // console.log("data :", response.data.data)
   }
 
   return (
