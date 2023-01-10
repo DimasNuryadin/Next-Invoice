@@ -21,7 +21,7 @@ export default function InvoiceItem(props: InvoiceItemProps) {
               <p className='label-child'>Latest Update {moment(date).format('DD/MM/YYYY')}</p>
             </td>
             <td className='cta-button text-end'>
-              <Link href={`/client/edit/${id}`}>
+              <Link href={`/client/update/${id}`}>
                 <Button label='Edit' buttonType="btn-secondary" />
               </Link>
               <Link href={`/client/read/${id}`}>

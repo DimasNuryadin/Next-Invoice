@@ -1,10 +1,9 @@
 import { useRouter } from 'next/router'
 import NavBar from '../../../components/molecules/NavBar'
-import FormInvoiceStep1 from '../../../components/organisms/FormInvoiceStep1'
 import Invoice from '../../../components/organisms/Invoice'
 import Sidebar from '../../../components/organisms/Sidebar'
 import { useCallback, useEffect, useState } from 'react';
-import { getInvoices } from '../../../services/user'
+import { getDescription, getDownPayment, getInvoices } from '../../../services/user'
 
 export default function Read() {
   const { query, isReady } = useRouter();
@@ -12,34 +11,40 @@ export default function Read() {
     alamat_perusahaan: '',
     no_invoice: '',
     company: '',
-    invoice_date: '',
-    due_date: '',
+    invoice_date: new Date(),
+    due_date: new Date(),
+    payment_instruction: '',
   })
 
+  const [dataDescription, setDataDescription] = useState([])
+  const [dataDownPayment, setDataDownPayment] = useState([]);
+
   // Callback
-  const getInvoiceAPI = useCallback(async (id) => {
-    const data = await getInvoices(id);
-    console.log('data', data)
-    setDataInvoice(data)
+  const getInvoiceAPI = useCallback(async (id: any) => {
+    const dataInvoices = await getInvoices(id);
+    const dataDescriptions = await getDescription(id);
+    const dataDownPayments = await getDownPayment(id);
+
+    setDataInvoice(dataInvoices)
+    setDataDescription(dataDescriptions.data.data);
+    setDataDownPayment(dataDownPayments.data.data);
   }, [])
 
   useEffect(() => {
     if (isReady) {
-      console.log('Router sudah tersedia', query)
+      // console.log('Router sudah tersedia', query)
       getInvoiceAPI(query.id)
     } else {
-      console.log('router tidak tersedia')
+      // console.log('router tidak tersedia')
     }
-  }, [query, isReady])
+  }, [query, isReady, getInvoiceAPI])
 
   return (
     <div className='invoice-page'>
       <Sidebar url="client" />
       <div className='dashboard'>
         <NavBar />
-        <div className='row mt-5 pt-4'>
-          <FormInvoiceStep1 />
-
+        <div className='mt-5 pt-4'>
           {/* Invoice */}
           <Invoice
             alamat_perusahaan={dataInvoice.alamat_perusahaan}
@@ -47,6 +52,9 @@ export default function Read() {
             company={dataInvoice.company}
             invoice_date={dataInvoice.invoice_date}
             due_date={dataInvoice.due_date}
+            payment_instruction={dataInvoice.payment_instruction}
+            desc={dataDescription}
+            dp={dataDownPayment}
           />
         </div>
       </div>

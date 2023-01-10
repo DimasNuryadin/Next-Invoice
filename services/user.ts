@@ -51,8 +51,15 @@ export async function updateInvoicesStep2(data: FormInvoicesStep2, id: any) {
   })
 }
 
-export async function getDescription() {
-  return null;
+
+// Descriptions
+export async function getDescription(id: any) {
+  const url = `${ROOT_API}/descriptions/${id}`
+
+  return callApi({
+    url,
+    method: 'GET',
+  })
 }
 
 export async function createDescription(data: FormDescription) {
@@ -65,6 +72,26 @@ export async function createDescription(data: FormDescription) {
   })
 }
 
+export async function deleteDescription(id_invoices: any) {
+  const url = `${ROOT_API}/descriptions/${id_invoices}`
+
+  return callApi({
+    url,
+    method: 'DELETE',
+  })
+}
+
+
+// Down Payments
+export async function getDownPayment(id: any) {
+  const url = `${ROOT_API}/down_payments/${id}`;
+
+  return callApi({
+    url,
+    method: 'GET'
+  })
+}
+
 export async function createDownPayment(data: FormDownPayment) {
   const url = `${ROOT_API}/down_payments`
 
@@ -72,5 +99,14 @@ export async function createDownPayment(data: FormDownPayment) {
     url,
     method: 'POST',
     data: data
+  })
+}
+
+export async function deleteDownPayment(id_invoices: any) {
+  const url = `${ROOT_API}/down_payments/${id_invoices}`
+
+  return callApi({
+    url,
+    method: 'DELETE',
   })
 }

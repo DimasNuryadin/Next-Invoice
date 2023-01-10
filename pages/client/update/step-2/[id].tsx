@@ -1,14 +1,14 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { NumericFormat } from 'react-number-format'
-import Button from '../../../components/atoms/Button'
-import ButtonShowItem from '../../../components/molecules/ButtonShowItem'
-import NavBar from '../../../components/molecules/NavBar'
-import Invoice from '../../../components/organisms/Invoice'
-import Sidebar from '../../../components/organisms/Sidebar'
-import { createDescription, createDownPayment, updateInvoicesStep2 } from '../../../services/user';
+import Button from '../../../../components/atoms/Button'
+import ButtonShowItem from '../../../../components/molecules/ButtonShowItem'
+import NavBar from '../../../../components/molecules/NavBar'
+import Invoice from '../../../../components/organisms/Invoice'
+import Sidebar from '../../../../components/organisms/Sidebar'
+import { createDescription, createDownPayment, deleteDescription, deleteDownPayment, getDescription, getDownPayment, updateInvoicesStep2 } from '../../../../services/user';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Swal from 'sweetalert2'
@@ -16,7 +16,7 @@ import { useReactToPrint } from 'react-to-print'
 
 export default function Step2() {
   // Ambil data dari paramas
-  const { query } = useRouter();
+  const { query, isReady } = useRouter();
   const router = useRouter();
   const [dataStep1, setDataStep1] = useState({
     alamat_perusahaan: '',
@@ -43,12 +43,40 @@ export default function Step2() {
   const [desc, setDesc] = useState([{ id_invoices: 0, description: "", qty: 1, rate: 0 }])
   const [dp, setDp] = useState([{ id_invoices: 0, date: new Date, rate: 0 }])
 
+  const getInvoiceAPI = useCallback(async (id: any) => {
+    // Get Description & Down Payment
+    const dataDescriptions = await getDescription(id)
+    const dataDownPayments = await getDownPayment(id);
+
+    if (dataDescriptions.data.data.length > 0) {
+      setDesc(dataDescriptions.data.data)
+      console.log("ada desc : ", dataDownPayments.data.data)
+    }
+
+    if (dataDownPayments.data.data.length > 0) {
+      setDp(dataDownPayments.data.data)
+      console.log("ada dp : ", dataDownPayments.data.data)
+    }
+  }, [])
+
   // Get data Step-1
   useEffect(() => {
     const localStep1: any = localStorage.getItem('step-1')
     const dataStep1 = JSON.parse(localStep1)
     setDataStep1(dataStep1);
-  }, [])
+
+    setDiscount({ active: true, value: dataStep1.discount });
+    setTax({ active: true, value: dataStep1.tax });
+    setShipping({ active: true, value: dataStep1.shipping });
+
+    setPayment_instruction(dataStep1.payment_instruction)
+
+    // console.log("data : ", dataStep1)
+
+    if (isReady) {
+      getInvoiceAPI(query.id);
+    }
+  }, [query, isReady, getInvoiceAPI])
 
   // Line Item Description
   const addLineDescription = () => {
@@ -131,13 +159,15 @@ export default function Step2() {
       }).then(async (result) => {
         if (result.isConfirmed) {
           const response = await updateInvoicesStep2(invoicesForm, query.id)
+          await deleteDescription(query.id)
+          await deleteDownPayment(query.id)
 
           if (response.error) {
             toast.error(response.message)
             // console.log("form :", invoicesForm)
             // console.log("response : ", response)
           } else {
-            saveDescriptionDP()
+            deleteDescDP()
             toast.success("Berhasil tambah data")
             Swal.fire(
               'Disimpan',
@@ -148,6 +178,16 @@ export default function Step2() {
           }
         }
       })
+    }
+  }
+
+  // Delete descriptions & dp
+  const deleteDescDP = async () => {
+    const resDescDelete = await deleteDescription(query.id)
+    const resDPDelete = await deleteDownPayment(query.id)
+
+    if (!resDescDelete.error && !resDPDelete.error) {
+      saveDescriptionDP()
     }
   }
 
@@ -174,7 +214,7 @@ export default function Step2() {
 
   return (
     <div className='invoice-page' >
-      <Sidebar url="create-invoice" />
+      <Sidebar url="client" />
       <div className='dashboard'>
         <NavBar />
         <div className='row mt-5 pt-4'>
