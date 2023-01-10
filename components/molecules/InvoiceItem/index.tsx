@@ -1,15 +1,17 @@
 import Link from 'next/link';
 import Button from '../../atoms/Button'
 import moment from 'moment';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface InvoiceItemProps {
   company: string;
   date: string;
   id: number;
+  onClick: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 export default function InvoiceItem(props: InvoiceItemProps) {
-  const { company, date, id } = props;
+  const { company, date, id, onClick } = props;
 
   return (
     <div className="mt-4">
@@ -27,7 +29,7 @@ export default function InvoiceItem(props: InvoiceItemProps) {
               <Link href={`/client/read/${id}`}>
                 <Button label='Lihat' buttonType="btn-tertiary" />
               </Link>
-              <Button label='Hapus' buttonType="btn-quaternary" />
+              <Button label='Hapus' buttonType="btn-quaternary" onClick={onClick} />
             </td>
           </tr>
         </tbody>

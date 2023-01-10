@@ -51,6 +51,15 @@ export async function updateInvoicesStep2(data: FormInvoicesStep2, id: any) {
   })
 }
 
+export async function deleteInvoices(id_invoices: any) {
+  const url = `${ROOT_API}/invoices/${id_invoices}`
+
+  return callApi({
+    url,
+    method: 'DELETE',
+  })
+}
+
 
 // Descriptions
 export async function getDescription(id: any) {

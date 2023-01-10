@@ -50,12 +50,10 @@ export default function Step2() {
 
     if (dataDescriptions.data.data.length > 0) {
       setDesc(dataDescriptions.data.data)
-      console.log("ada desc : ", dataDownPayments.data.data)
     }
 
     if (dataDownPayments.data.data.length > 0) {
       setDp(dataDownPayments.data.data)
-      console.log("ada dp : ", dataDownPayments.data.data)
     }
   }, [])
 
@@ -159,8 +157,6 @@ export default function Step2() {
       }).then(async (result) => {
         if (result.isConfirmed) {
           const response = await updateInvoicesStep2(invoicesForm, query.id)
-          await deleteDescription(query.id)
-          await deleteDownPayment(query.id)
 
           if (response.error) {
             toast.error(response.message)
