@@ -13,13 +13,6 @@ export default function Home() {
 
   const router = useRouter()
 
-  useEffect(() => {
-    const token = Cookies.get('token')
-    if (token) {
-      router.push('/create-invoice')
-    }
-  }, [router])
-
   const onSubmit = async () => {
     const data = {
       email,
@@ -81,4 +74,23 @@ export default function Home() {
       <ToastContainer />
     </div>
   )
+}
+
+export async function getServerSideProps({ req }) {
+  const { token } = req.cookies
+  if (token) {
+    return {
+      redirect: {
+        destination: '/create-invoice',
+        permanent: false,
+      }
+    }
+  }
+
+  // console.log("token: ", token)
+  return {
+    props: {
+      user: {},
+    }
+  }
 }

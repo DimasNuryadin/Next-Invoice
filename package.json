@@ -26,6 +26,7 @@
     "react-number-format": "^5.1.2",
     "react-to-print": "^2.14.10",
     "react-toastify": "^9.1.1",
+    "sweetalert2": "^11.6.16",
     "typescript": "4.9.4"
   },
   "devDependencies": {

@@ -12,6 +12,7 @@ interface InvoiceProps {
   desc?: Desc[];
   dp?: Dp[];
   subTotal?: number;
+  sisa?: number;
 }
 
 interface Desc {
@@ -30,6 +31,7 @@ export default function Invoice(props: Partial<InvoiceProps>) {
     desc,
     dp,
     subTotal,
+    sisa,
     alamat_perusahaan,
     no_invoice,
     company,
@@ -39,7 +41,7 @@ export default function Invoice(props: Partial<InvoiceProps>) {
   } = props;
 
   return (
-    <div className='col-6'>
+    <div>
       <div className="invoice">
         <div className="row">
           <div className="col cek">
@@ -149,7 +151,7 @@ export default function Invoice(props: Partial<InvoiceProps>) {
           <p className='col-3 head-table'>
             <NumericFormat
               prefix="Rp. "
-              value={100000}
+              value={sisa}
               displayType="text"
               thousandSeparator="."
               decimalSeparator=","

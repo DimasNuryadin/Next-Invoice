@@ -93,3 +93,10 @@ input[type=date]:focus::-webkit-datetime-edit {
 .input-icon-form {
   padding: 0px 2px;
 }
+
+@media print {
+  @page {
+    size: 220mm 320mm;
+    margin: 30px 0px !important;
+  }
+}

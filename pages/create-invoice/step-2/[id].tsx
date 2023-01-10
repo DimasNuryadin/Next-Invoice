@@ -11,10 +11,14 @@ import Sidebar from '../../../components/organisms/Sidebar'
 import { createDescription, createDownPayment, updateInvoicesStep2 } from '../../../services/user';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Swal from 'sweetalert2'
+import { useReactToPrint } from 'react-to-print'
+import React, { useRef } from 'react'
 
 export default function Step2() {
   // Ambil data dari paramas
   const { query } = useRouter();
+  const router = useRouter();
   const [dataStep1, setDataStep1] = useState({
     alamat_perusahaan: '',
     no_invoice: '',
@@ -26,15 +30,15 @@ export default function Step2() {
 
   const [discount, setDiscount] = useState({
     active: false,
-    value: 0,
+    value: 0
   })
   const [tax, setTax] = useState({
     active: false,
-    value: 0,
+    value: 0
   })
   const [shipping, setShipping] = useState({
     active: false,
-    value: 0,
+    value: 0
   })
 
   const [desc, setDesc] = useState([
@@ -44,7 +48,7 @@ export default function Step2() {
     {
       id_invoices: 0,
       date: new Date,
-      rate: 0,
+      rate: 0
     }
   ])
   // console.log("desc :", desc)
@@ -97,17 +101,23 @@ export default function Step2() {
   // Subtotal
   let subTotal1 = desc.map(x => x.qty * x.rate)
   // console.log("Amount :", subTotal1)
-  const subTotal = subTotal1.reduce(subTotalFunction)
-  function subTotalFunction(total: number, value: number) {
+  const subTotal = subTotal1.reduce(jumlahArray)
+  function jumlahArray(total: number, value: number) {
     return total + value;
   }
   // console.log("sub total :", subTotal)
 
   // Total
-  let totalDisc = subTotal * (10 / 100);
-  let totalTax = subTotal * (10 / 100);
-  let totalShipping = 0;
-  let total = subTotal - totalDisc - totalTax - totalShipping;
+  let totalDisc = subTotal * (discount.value / 100);
+  let totalTax = subTotal * (tax.value / 100);
+  let totalShipping = shipping.value;
+  let total = subTotal - totalDisc + totalTax + totalShipping;
+
+  // Sisa
+  let dpRate = dp.map(x => Number(x.rate))
+  let jumlahDP = dpRate.reduce(jumlahArray)
+  // console.log('Sisa : ', jumlahDP)
+  let sisa = total - jumlahDP
 
   const onSubmit = async () => {
     const invoicesForm = {
@@ -120,28 +130,62 @@ export default function Step2() {
     if (!payment_instruction) {
       toast.error('Payment Instruction wajib diisi!!')
     } else {
-      const response = await updateInvoicesStep2(invoicesForm, query.id)
+      Swal.fire({
+        title: 'Apakah data sudah benar?',
+        text: "Data akan disimpan di database!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Belum',
+        confirmButtonText: 'Sudah!',
+        reverseButtons: true
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          const response = await updateInvoicesStep2(invoicesForm, query.id)
 
-      desc.forEach(async (x) => {
-        x.id_invoices = Number(query.id)
-        await createDescription(x);
+          if (response.error) {
+            toast.error(response.message)
+            // console.log("form :", invoicesForm)
+            // console.log("response : ", response)
+          } else {
+            saveDescriptionDP()
+            toast.success("Berhasil tambah data")
+            Swal.fire(
+              'Disimpan',
+              'Data sudah disimpan.',
+              'success'
+            )
+            handlePrint();
+          }
+        }
       })
-
-      dp.forEach(async (x) => {
-        x.id_invoices = Number(query.id)
-        await createDownPayment(x);
-      })
-
-      if (response.error) {
-        toast.error(response.message)
-      } else {
-        toast.success("Berhasil tambah data")
-      }
     }
   }
 
+  // Push Desc and DP to Database
+  const saveDescriptionDP = () => {
+    desc.forEach(async (x) => {
+      x.id_invoices = Number(query.id)
+      await createDescription(x);
+    })
+
+    dp.forEach(async (x) => {
+      x.id_invoices = Number(query.id)
+      await createDownPayment(x);
+    })
+  }
+
+  // Print PDF
+  const componentRef = useRef<HTMLDivElement>(null);
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+    documentTitle: "emp-data",
+    onAfterPrint: () => router.push('/client'),
+  })
+
   return (
-    <div className='invoice-page'>
+    <div className='invoice-page' >
       <Sidebar url="create-invoice" />
       <div className='dashboard'>
         <NavBar />
@@ -161,15 +205,15 @@ export default function Step2() {
                 <div key={index}>
                   <div className="row text-center description-input">
                     <div className="col-4">
-                      <input type="text" className="form-control" name="description" value={data.description} onChange={(e) => handleChangeDesc(e, index)} />
+                      <input type="text" className="form-control" name='description' value={data.description} onChange={(e) => handleChangeDesc(e, index)} />
                     </div>
                     <div className="col-1">
-                      <input type="text" className="form-control" name="qty" value={data.qty} onChange={(e) => handleChangeDesc(e, index)} />
+                      <input type="text" className="form-control" name='qty' value={data.qty} onChange={(e) => handleChangeDesc(e, index)} />
                     </div>
                     <div className="col-3">
                       <div className="input-group ">
                         <label className="input-group-text bg-white border-none" htmlFor="rate" style={{ fontSize: 15, padding: 6 }} >Rp</label>
-                        <input type="text" className="form-control border-start-0" id="rate" style={{ padding: '0px 2px' }} name="rate" value={data.rate} onChange={(e) => handleChangeDesc(e, index)} />
+                        <input type="text" className="form-control border-start-0" id="rate" name='rate' style={{ padding: '0px 2px' }} value={data.rate} onChange={(e) => handleChangeDesc(e, index)} />
                       </div>
                     </div>
                     <div className="col-4" >
@@ -225,7 +269,7 @@ export default function Step2() {
                   </p>
                   <div className="col-3">
                     <div className="input-group float-start my-auto mt-1">
-                      <input type="text" className="form-control border-end-0" id='disc' style={{ padding: '0px 2px' }} value={discount.value} onChange={(event) => setDiscount({ active: true, value: Number(event.target.value) })} />
+                      <input type="text" className="form-control border-end-0" id='disc' value={discount.value} onChange={(event) => setDiscount({ active: true, value: Number(event.target.value) })} />
                       <label className="input-group-text bg-white border-none" style={{ fontSize: 15 }} htmlFor="disc" >%</label>
                     </div>
                   </div>
@@ -243,7 +287,7 @@ export default function Step2() {
                   </p>
                   <div className="col-3">
                     <div className="input-group float-start my-auto mt-1">
-                      <input type="text" className="form-control border-end-0" id='tax' style={{ padding: '0px 2px' }} value={tax.value} onChange={(event) => setTax({ active: true, value: Number(event.target.value) })} />
+                      <input type="text" className="form-control border-end-0" id='tax' value={tax.value} onChange={(event) => setTax({ active: true, value: Number(event.target.value) })} />
                       <label className="input-group-text bg-white border-none" style={{ fontSize: 15 }} htmlFor="tax" >%</label>
                     </div>
                   </div>
@@ -260,9 +304,9 @@ export default function Step2() {
                     Shipping
                   </p>
                   <div className="col-3">
-                    <div className="input-group float-start my-auto mt-1">
-                      <input type="text" className="form-control border-end-0" id='shipping' style={{ padding: '0px 2px' }} value={shipping.value} onChange={(event) => setShipping({ active: true, value: Number(event.target.value) })} />
-                      <label className="input-group-text bg-white border-none" style={{ fontSize: 15 }} htmlFor="shipping" >%</label>
+                    <div className="input-group my-auto mt-1 ">
+                      <label className="input-group-text bg-white border-none" style={{ fontSize: 15, padding: 6 }} htmlFor="shipping" >Rp</label>
+                      <input type="text" className="form-control border-start-0" style={{ padding: '0px 2px' }} id='shipping' value={shipping.value} onChange={(event) => setShipping({ active: true, value: Number(event.target.value) })} />
                     </div>
                   </div>
                   <div className='col-1 my-auto'>
@@ -300,13 +344,13 @@ export default function Step2() {
                         )}
                       </div>
                       <p className='col-4 my-auto label text-start' style={{ width: 70 }}>DP {index + 1}</p>
-                      <input className="form-control col" type="date" id="Due Date" name="date" value={data.date} onChange={(e) => handleChangeDp(e, index)} required />
+                      <input className="form-control col" type="date" id="Due Date" name='date' value={data.date} onChange={(e) => handleChangeDp(e, index)} required />
                     </div>
                   </div>
                   <div className="col-3">
                     <div className="input-group ">
                       <label className="input-group-text bg-white border-none" style={{ fontSize: 15, padding: 6 }} htmlFor="dp1" >Rp</label>
-                      <input type="text" className="form-control border-start-0" style={{ padding: '0px 2px' }} id="dp1" name="rate" value={data.rate} onChange={(e) => handleChangeDp(e, index)} />
+                      <input type="text" className="form-control border-start-0" style={{ padding: '0px 2px' }} name="rate" id="dp1" value={data.rate} onChange={(e) => handleChangeDp(e, index)} />
                     </div>
                   </div>
                   {dp.length > 1 && (
@@ -318,13 +362,13 @@ export default function Step2() {
               ))}
 
               {/* Sisa */}
-              <div className="row mt-1">
+              <div className="row mt-1" >
                 <div className="col-4"></div>
                 <p className='col-4 label'>Sisa</p>
                 <p className='col-4 label'>
                   <NumericFormat
                     prefix="Rp. "
-                    value={10000}
+                    value={sisa}
                     displayType="text"
                     thousandSeparator="."
                     decimalSeparator=","
@@ -360,17 +404,22 @@ export default function Step2() {
           </div>
 
           {/* Invoice */}
-          <Invoice
-            desc={desc}
-            dp={dp}
-            subTotal={subTotal}
-            alamat_perusahaan={dataStep1.alamat_perusahaan}
-            no_invoice={dataStep1.no_invoice}
-            company={dataStep1.company}
-            invoice_date={dataStep1.invoice_date}
-            due_date={dataStep1.due_date}
-            payment_instruction={payment_instruction}
-          />
+          <div className='col-6' >
+            <div ref={componentRef}>
+              <Invoice
+                desc={desc}
+                dp={dp}
+                subTotal={subTotal}
+                sisa={sisa}
+                alamat_perusahaan={dataStep1.alamat_perusahaan}
+                no_invoice={dataStep1.no_invoice}
+                company={dataStep1.company}
+                invoice_date={dataStep1.invoice_date}
+                due_date={dataStep1.due_date}
+                payment_instruction={payment_instruction}
+              />
+            </div>
+          </div>
         </div>
         <ToastContainer />
       </div>

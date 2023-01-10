@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Button from '../../atoms/Button'
+import moment from 'moment';
 
 interface InvoiceItemProps {
   company: string;
@@ -17,7 +18,7 @@ export default function InvoiceItem(props: InvoiceItemProps) {
           <tr>
             <td>
               <p className='label'>{company}</p>
-              <p className='label-child'>Latest Update {date}</p>
+              <p className='label-child'>Latest Update {moment(date).format('DD/MM/YYYY')}</p>
             </td>
             <td className='cta-button text-end'>
               <Link href={`/client/edit/${id}`}>

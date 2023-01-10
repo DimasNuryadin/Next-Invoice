@@ -37,7 +37,6 @@ export default function CreateInvoice() {
       localStorage.setItem('step-1', JSON.stringify(response.data.data))
       router.push(`/create-invoice/step-2/${id}`)
     }
-
   }
 
   return (
@@ -60,13 +59,15 @@ export default function CreateInvoice() {
             onSubmit={onSubmit}
           />
           {/* Invoice */}
-          <Invoice
-            alamat_perusahaan={alamat_perusahaan}
-            no_invoice={no_invoice}
-            company={company}
-            invoice_date={invoice_date}
-            due_date={due_date}
-          />
+          <div className="col-6">
+            <Invoice
+              alamat_perusahaan={alamat_perusahaan}
+              no_invoice={no_invoice}
+              company={company}
+              invoice_date={invoice_date}
+              due_date={due_date}
+            />
+          </div>
         </div>
       </div>
       <ToastContainer />
