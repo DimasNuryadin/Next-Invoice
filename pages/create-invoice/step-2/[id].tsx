@@ -257,7 +257,7 @@ export default function Step2() {
                   </p>
                   <div className="col-3">
                     <div className="input-group float-start my-auto mt-1">
-                      <input type="text" className="form-control border-end-0" id='disc' value={discount.value} onChange={(event) => setDiscount({ active: true, value: Number(event.target.value) })} />
+                      <input type="text" className="form-control border-end-0" id='disc' maxLength={3} value={discount.value} onChange={(event) => setDiscount({ active: true, value: Number(event.target.value) })} />
                       <label className="input-group-text bg-white border-none" style={{ fontSize: 15 }} htmlFor="disc" >%</label>
                     </div>
                   </div>
@@ -275,7 +275,7 @@ export default function Step2() {
                   </p>
                   <div className="col-3">
                     <div className="input-group float-start my-auto mt-1">
-                      <input type="text" className="form-control border-end-0" id='tax' value={tax.value} onChange={(event) => setTax({ active: true, value: Number(event.target.value) })} />
+                      <input type="text" className="form-control border-end-0" id='tax' maxLength={3} value={tax.value} onChange={(event) => setTax({ active: true, value: Number(event.target.value) })} />
                       <label className="input-group-text bg-white border-none" style={{ fontSize: 15 }} htmlFor="tax" >%</label>
                     </div>
                   </div>

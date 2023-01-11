@@ -1,23 +1,34 @@
-import NavBar from '../../components/molecules/NavBar'
-import Sidebar from '../../components/organisms/Sidebar'
+import NavBar from '../../../components/molecules/NavBar'
+import Sidebar from '../../../components/organisms/Sidebar'
 import { useCallback, useEffect, useState } from 'react';
-import InvoiceItem from '../../components/molecules/InvoiceItem';
-import { getAllInvoices, deleteDescription, deleteDownPayment, deleteInvoices } from '../../services/user';
-import { InvoicesListTypes } from '../../services/data-types';
+import InvoiceItem from '../../../components/molecules/InvoiceItem';
+import { deleteDescription, deleteDownPayment, deleteInvoices, getInvoicesCompany } from '../../../services/user';
+import { InvoicesListTypes } from '../../../services/data-types';
 import Swal from 'sweetalert2'
 import { ToastContainer, toast } from 'react-toastify';
+import { useRouter } from 'next/router';
 
-export default function Clients() {
+
+
+export default function ClientsSearch() {
+  const { query, isReady } = useRouter();
+
   const [invoicesList, setInvoicesList] = useState([])
 
   // Callback
-  const getAllInvoice = useCallback(async () => {
-    const data = await getAllInvoices()
-    setInvoicesList(data.data.data);
+  const getAllInvoice = useCallback(async (company: any) => {
+    const data = await getInvoicesCompany(company)
+    setInvoicesList(data.data.data)
   }, [])
 
   useEffect(() => {
-    getAllInvoice();
+    // getAllInvoice();
+    if (isReady) {
+      getAllInvoice(query.company)
+    } else {
+      console.log("data belum dapat")
+    }
+
   }, [getAllInvoice]);
 
   const onDelete = (id: any) => {
@@ -49,12 +60,15 @@ export default function Clients() {
               'Data sudah dihapus.',
               'success'
             )
-            getAllInvoice();
+            getAllInvoice(query.company);
           }
         }
       }
     })
   }
+
+  // Filter search
+
 
   return (
     <div className='invoice-page'>
@@ -64,7 +78,7 @@ export default function Clients() {
 
         <div className='row mt-5 client'>
           <div className='col-11'>
-            <h2 className='title-2'>CLIENTS</h2>
+            <h2 className='title-2'>SEARCH</h2>
 
             {/* CLient List */}
             {invoicesList.map((item: InvoicesListTypes) => {

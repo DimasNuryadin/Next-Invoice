@@ -4,12 +4,12 @@ import { FormDescription, FormDownPayment, FormInvoicesStep1, FormInvoicesStep2 
 const ROOT_API = process.env.NEXT_PUBLIC_API;
 
 export async function getAllInvoices() {
-  const URL = 'invoices'
+  const url = `${ROOT_API}/invoices`;
 
-  const response = await axios.get(`${ROOT_API}/${URL}`);
-  const axiosResponse = response.data;
-
-  return axiosResponse.data
+  return callApi({
+    url,
+    method: 'GET'
+  })
 }
 
 export async function getInvoices(id: any) {
@@ -19,6 +19,16 @@ export async function getInvoices(id: any) {
   const axiosResponse = response.data;
 
   return axiosResponse.data
+}
+
+export async function getInvoicesCompany(company: any) {
+  const url = `${ROOT_API}/invoices/company/${company}`;
+
+  return callApi({
+    url,
+    method: 'GET',
+    data: company
+  })
 }
 
 export async function createInvoices(data: FormInvoicesStep1) {
