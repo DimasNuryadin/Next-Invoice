@@ -216,7 +216,7 @@ export default function Step2() {
         <div className='row mt-5 pt-4'>
 
           <div className='col-6 pe-5 create-invoice'>
-            <h2 className='title-2'>CREATE INVOICES</h2>
+            <h2 className='title-2'>EDIT INVOICES</h2>
             <div className='mb-3 mt-5 invoice-description'>
               <div className="row text-center head">
                 <p className="col-4 head-table">Description</p>
@@ -420,7 +420,7 @@ export default function Step2() {
               <div className='float-end ms-4'>
                 <Button buttonType="btn-primary" label="Submit" onClick={onSubmit} />
               </div>
-              <Link href={`/create-invoice/${query.id}`} className='float-end' >
+              <Link href={`/client/update/${query.id}`} className='float-end' >
                 <Button buttonType="btn-secondary" label="Back" />
               </Link>
             </div>

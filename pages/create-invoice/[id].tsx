@@ -55,19 +55,23 @@ export default function EditInvoiceStep1() {
       <div className='dashboard'>
         <NavBar />
         <div className='row mt-5 pt-4'>
-          <FormInvoiceStep1
-            alamat_perusahaan={alamat_perusahaan}
-            no_invoice={no_invoice}
-            company={company}
-            invoice_date={invoice_date}
-            due_date={due_date}
-            setAlamat_perusahaan={setAlamat_perusahaan}
-            setNo_invoice={setNo_invoice}
-            setCompany={setCompany}
-            setInvoice_date={setInvoice_date}
-            setDue_date={setDue_date}
-            onSubmit={onSubmit}
-          />
+          <div className='col-6 create-invoice'>
+            <h2 className='title-2'>CREATE INVOICES</h2>
+            <FormInvoiceStep1
+              alamat_perusahaan={alamat_perusahaan}
+              no_invoice={no_invoice}
+              company={company}
+              invoice_date={invoice_date}
+              due_date={due_date}
+              setAlamat_perusahaan={setAlamat_perusahaan}
+              setNo_invoice={setNo_invoice}
+              setCompany={setCompany}
+              setInvoice_date={setInvoice_date}
+              setDue_date={setDue_date}
+              onSubmit={onSubmit}
+            />
+          </div>
+
           {/* Invoice */}
           <div className="col-6">
             <Invoice

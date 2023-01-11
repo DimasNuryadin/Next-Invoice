@@ -29,8 +29,7 @@ export default function FormInvoiceStep1(props: Partial<FormInvoiceStep1Props>) 
   } = props;
 
   return (
-    <div className='col-6 create-invoice'>
-      <h2 className='title-2'>CREATE INVOICES</h2>
+    <>
       <div className="mb-3 mt-5">
         <label htmlFor="Alamat Perusahaan" className="form-label label">Alamat Perusahaan</label>
         <textarea
@@ -88,6 +87,6 @@ export default function FormInvoiceStep1(props: Partial<FormInvoiceStep1Props>) 
         </div>
       </div>
       <br /><br />
-    </div>
+    </>
   )
 }
