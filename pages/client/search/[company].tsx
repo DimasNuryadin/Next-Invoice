@@ -22,14 +22,13 @@ export default function ClientsSearch() {
   }, [])
 
   useEffect(() => {
-    // getAllInvoice();
     if (isReady) {
       getAllInvoice(query.company)
     } else {
       console.log("data belum dapat")
     }
 
-  }, [getAllInvoice]);
+  }, [query, isReady, getAllInvoice]);
 
   const onDelete = (id: any) => {
     Swal.fire({

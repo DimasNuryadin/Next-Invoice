@@ -1,0 +1,78 @@
+/* Invoice */
+.invoice-pdf {
+  background-color: #fff;
+  padding: 10px 52px;
+  max-width: 54rem;
+}
+
+.invoice-pdf .invoice-address {
+  color: #000;
+  font-size: 17px;
+  white-space: pre-line;
+}
+
+.invoice-pdf .invoice-title {
+  color: #F37335;
+  font-weight: 700;
+  font-size: 52px;
+  padding-top: 8px;
+}
+
+.invoice-pdf .bill-information {
+  background-color: rgba(243, 115, 53, 0.2);
+  border-radius: 5px;
+  padding: 23px 17px 21px 26px;
+}
+
+.invoice-pdf .head-table {
+  color: #000;
+  font-weight: 500;
+  font-size: 17px;
+  margin-bottom: 20px;
+}
+
+.invoice-pdf .bill {
+  color: #000;
+  font-size: 17px;
+  line-height: 10px;
+  font-weight: 400;
+}
+
+.invoice-pdf .name-invoice {
+  border-radius: 5px;
+  padding: 20px 11px 2px 11px;
+  border-bottom: 1px solid #DDDDDD;
+}
+
+.invoice-pdf .name-invoice p {
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.invoice-pdf .subtotal {
+  line-height: 14px;
+}
+
+.invoice-pdf .subtotal p {
+  font-size: 17px;
+}
+
+.invoice-pdf .dp {
+  line-height: 12px;
+}
+
+.invoice-pdf .dp p {
+  font-size: 17px;
+}
+
+.invoice-pdf .payment-instruction {
+  width: 30rem;
+  white-space: pre-line;
+}
+
+@media print {
+  @page {
+    size: 220mm 320mm;
+    margin: 30px 0px !important;
+  }
+}

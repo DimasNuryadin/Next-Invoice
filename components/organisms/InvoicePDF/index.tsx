@@ -2,7 +2,7 @@ import Image from 'next/image'
 import { NumericFormat } from 'react-number-format'
 import moment from 'moment';
 
-interface InvoiceProps {
+interface InvoicePDFProps {
   alamat_perusahaan: string;
   no_invoice: string;
   company: string;
@@ -14,7 +14,7 @@ interface InvoiceProps {
   subTotal?: number;
   sisa?: number;
   discount?: number;
-  tax?: number,
+  tax?: number;
   shipping?: number;
 }
 
@@ -29,7 +29,7 @@ interface Dp {
   rate: number;
 }
 
-export default function Invoice(props: Partial<InvoiceProps>) {
+export default function InvoicePDF(props: Partial<InvoicePDFProps>) {
   const {
     desc,
     dp,
@@ -48,10 +48,10 @@ export default function Invoice(props: Partial<InvoiceProps>) {
 
   return (
     <div>
-      <div className="invoice">
+      <div className="invoice-pdf">
         <div className="row">
           <div className="col">
-            <Image src="/img/logo-3.png" width={160} height={40} alt="Logo Kamojang" />
+            <Image src="/img/logo-3.png" width={300} height={75} alt="Logo Kamojang" />
             <p className='mt-3 invoice-address'>
               {alamat_perusahaan}
             </p>
@@ -61,7 +61,7 @@ export default function Invoice(props: Partial<InvoiceProps>) {
           </p>
         </div>
 
-        <div className="row bill-information">
+        <div className="row bill-information mt-2">
           <div className="col">
             <p className='head-table'>Bill To :</p>
             <p className='bill'>{company}</p>
@@ -73,7 +73,7 @@ export default function Invoice(props: Partial<InvoiceProps>) {
           </div>
         </div>
         <br />
-        <div className="row bill-information" style={{ height: '44px' }}>
+        <div className="row bill-information" style={{ height: '70px' }}>
           <p className='col-1 head-table'>No</p>
           <p className='col-4 head-table'>Description</p>
           <p className='col-1 head-table'>Qty</p>
@@ -199,7 +199,7 @@ export default function Invoice(props: Partial<InvoiceProps>) {
         )}
 
         {/* Sisa */}
-        <div className="row mt-2 subtotal">
+        <div className="row subtotal">
           <p className='col-6'></p>
           <p className='col-3 head-table'>SISA</p>
           <p className='col-3 head-table'>

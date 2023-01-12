@@ -19,12 +19,15 @@ export default function ClientEditInvoiceStep1() {
   const [invoice_date, setInvoice_date] = useState(new Date)
   const [due_date, setDue_date] = useState(new Date)
   const [payment_instruction, setPayment_instruction] = useState('');
-  const [discount, setDiscount] = useState('');
-  const [tax, setTax] = useState('')
-  const [shipping, setShipping] = useState('');
+  const [discount, setDiscount] = useState(0);
+  const [tax, setTax] = useState(0)
+  const [shipping, setShipping] = useState(0);
 
   const [description, setDescription] = useState([])
   const [down_payment, setDown_payment] = useState([])
+
+  const [dataSubtotal, setDataSubtotal] = useState(0);
+  const [dataSisa, setDataSisa] = useState(0);
 
   const getInvoiceAPI = useCallback(async (id: any) => {
     // Get Invoices
@@ -43,8 +46,39 @@ export default function ClientEditInvoiceStep1() {
     const dataDescriptions = await getDescription(id)
     const dataDownPayments = await getDownPayment(id);
 
-    setDescription(dataDescriptions.data.data)
-    setDown_payment(dataDownPayments.data.data)
+    // Destructuring
+    const destDescriptions = dataDescriptions.data.data
+    const destDownPayments = dataDownPayments.data.data
+
+    setDescription(destDescriptions)
+    setDown_payment(destDownPayments)
+
+    function jumlahArray(total: number, value: number) {
+      return total + value;
+    }
+
+    if (destDescriptions.length > 0) {
+      // Subtotal
+      let subTotal1 = destDescriptions.map((x: any) => x.qty * x.rate)
+      const subTotal = subTotal1.reduce(jumlahArray)
+      setDataSubtotal(subTotal)
+
+      // // Total
+      let totalDisc = subTotal * (dataInvoices.discount / 100);
+      let totalTax = subTotal * (dataInvoices.tax / 100);
+      let totalShipping = dataInvoices.shipping;
+      let total = subTotal - totalDisc + totalTax + totalShipping;
+
+      if (destDownPayments.length > 0) {
+        // Sisa
+        let dpRate = destDownPayments.map((x: any) => Number(x.rate))
+        let jumlahDP = dpRate.reduce(jumlahArray)
+        let sisa = total - jumlahDP
+        setDataSisa(sisa)
+      } else {
+        setDataSisa(subTotal)
+      }
+    }
   }, [])
 
   useEffect(() => {
@@ -120,6 +154,11 @@ export default function ClientEditInvoiceStep1() {
               payment_instruction={payment_instruction}
               desc={description}
               dp={down_payment}
+              discount={discount}
+              tax={tax}
+              shipping={shipping}
+              sisa={dataSisa}
+              subTotal={dataSubtotal}
             />
           </div>
         </div>

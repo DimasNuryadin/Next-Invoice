@@ -13,6 +13,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Swal from 'sweetalert2'
 import { useReactToPrint } from 'react-to-print'
+import InvoicePDF from '../../../../components/organisms/InvoicePDF'
 
 export default function Step2() {
   // Ambil data dari paramas
@@ -204,7 +205,7 @@ export default function Step2() {
   const componentRef = useRef<HTMLDivElement>(null);
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
-    documentTitle: "emp-data",
+    documentTitle: `Invoice ${dataStep1.company}`,
     onAfterPrint: () => router.push('/client'),
   })
 
@@ -232,12 +233,12 @@ export default function Step2() {
                       <input type="text" className="form-control" name='description' value={data.description} onChange={(e) => handleChangeDesc(e, index)} />
                     </div>
                     <div className="col-1">
-                      <input type="text" className="form-control" name='qty' value={data.qty} onChange={(e) => handleChangeDesc(e, index)} />
+                      <input type="number" className="form-control" name='qty' value={data.qty} onChange={(e) => handleChangeDesc(e, index)} />
                     </div>
                     <div className="col-3">
                       <div className="input-group ">
                         <label className="input-group-text bg-white border-none" htmlFor="rate" style={{ fontSize: 15, padding: 6 }} >Rp</label>
-                        <input type="text" className="form-control border-start-0" id="rate" name='rate' style={{ padding: '0px 2px' }} value={data.rate} onChange={(e) => handleChangeDesc(e, index)} />
+                        <input type="number" className="form-control border-start-0" id="rate" name='rate' style={{ padding: '0px 2px' }} value={data.rate} onChange={(e) => handleChangeDesc(e, index)} />
                       </div>
                     </div>
                     <div className="col-4" >
@@ -293,7 +294,7 @@ export default function Step2() {
                   </p>
                   <div className="col-3">
                     <div className="input-group float-start my-auto mt-1">
-                      <input type="text" className="form-control border-end-0" id='disc' maxLength={3} value={discount.value} onChange={(event) => setDiscount({ active: true, value: Number(event.target.value) })} />
+                      <input type="number" className="form-control border-end-0" id='disc' value={discount.value} onChange={(event) => setDiscount({ active: true, value: Number(event.target.value) })} />
                       <label className="input-group-text bg-white border-none" style={{ fontSize: 15 }} htmlFor="disc" >%</label>
                     </div>
                   </div>
@@ -311,7 +312,7 @@ export default function Step2() {
                   </p>
                   <div className="col-3">
                     <div className="input-group float-start my-auto mt-1">
-                      <input type="text" className="form-control border-end-0" id='tax' maxLength={3} value={tax.value} onChange={(event) => setTax({ active: true, value: Number(event.target.value) })} />
+                      <input type="number" className="form-control border-end-0" id='tax' value={tax.value} onChange={(event) => setTax({ active: true, value: Number(event.target.value) })} />
                       <label className="input-group-text bg-white border-none" style={{ fontSize: 15 }} htmlFor="tax" >%</label>
                     </div>
                   </div>
@@ -330,7 +331,7 @@ export default function Step2() {
                   <div className="col-3">
                     <div className="input-group my-auto mt-1 ">
                       <label className="input-group-text bg-white border-none" style={{ fontSize: 15, padding: 6 }} htmlFor="shipping" >Rp</label>
-                      <input type="text" className="form-control border-start-0" style={{ padding: '0px 2px' }} id='shipping' value={shipping.value} onChange={(event) => setShipping({ active: true, value: Number(event.target.value) })} />
+                      <input type="number" className="form-control border-start-0" style={{ padding: '0px 2px' }} id='shipping' value={shipping.value} onChange={(event) => setShipping({ active: true, value: Number(event.target.value) })} />
                     </div>
                   </div>
                   <div className='col-1 my-auto'>
@@ -374,7 +375,7 @@ export default function Step2() {
                   <div className="col-3">
                     <div className="input-group ">
                       <label className="input-group-text bg-white border-none" style={{ fontSize: 15, padding: 6 }} htmlFor="dp1" >Rp</label>
-                      <input type="text" className="form-control border-start-0" style={{ padding: '0px 2px' }} name="rate" id="dp1" value={data.rate} onChange={(e) => handleChangeDp(e, index)} />
+                      <input type="number" className="form-control border-start-0" style={{ padding: '0px 2px' }} name="rate" id="dp1" value={data.rate} onChange={(e) => handleChangeDp(e, index)} />
                     </div>
                   </div>
                   {dp.length > 1 && (
@@ -429,7 +430,7 @@ export default function Step2() {
 
           {/* Invoice */}
           <div className='col-6' >
-            <div ref={componentRef}>
+            <div>
               <Invoice
                 desc={desc}
                 dp={dp}
@@ -440,9 +441,31 @@ export default function Step2() {
                 company={dataStep1.company}
                 invoice_date={dataStep1.invoice_date}
                 due_date={dataStep1.due_date}
+                discount={discount.value}
+                tax={tax.value}
+                shipping={shipping.value}
                 payment_instruction={payment_instruction}
               />
             </div>
+          </div>
+        </div>
+        <div style={{ display: 'none' }}>
+          <div ref={componentRef}>
+            <InvoicePDF
+              desc={desc}
+              dp={dp}
+              subTotal={subTotal}
+              sisa={sisa}
+              alamat_perusahaan={dataStep1.alamat_perusahaan}
+              no_invoice={dataStep1.no_invoice}
+              company={dataStep1.company}
+              invoice_date={dataStep1.invoice_date}
+              due_date={dataStep1.due_date}
+              discount={discount.value}
+              tax={tax.value}
+              shipping={shipping.value}
+              payment_instruction={payment_instruction}
+            />
           </div>
         </div>
         <ToastContainer />
