@@ -18,6 +18,15 @@ export default function Button(props: Partial<TypeButton>) {
   }
 
   if (icon && active) {
+    if (buttonType === 'btn-secondary' && icon === 'plus') {
+      return (
+        <div>
+          <button className={`button-icon ${buttonType}`} onClick={onClick} style={{ maxWidth: 140 }}>
+            <Image src={`/icon/${icon}-light.svg`} width={sizeIcon} height={sizeIcon} alt={icon} style={{ marginTop: -4 }} /> {label}</button>
+        </div>
+      )
+    }
+
     return (
       <div>
         <button className={`button-icon ${buttonType}`} onClick={onClick}>

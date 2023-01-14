@@ -1,3 +1,4 @@
+import moment from "moment";
 import Button from "../../atoms/Button";
 interface FormInvoiceStep1Props {
   alamat_perusahaan: string,
@@ -65,7 +66,7 @@ export default function FormInvoiceStep1(props: Partial<FormInvoiceStep1Props>) 
               className="form-control"
               type="date"
               id="Invoice Date"
-              value={invoice_date}
+              value={moment(invoice_date).format('YYYY-MM-DD')}
               onChange={(event) => setInvoice_date(event.target.value)}
             />
           </div>
@@ -75,7 +76,7 @@ export default function FormInvoiceStep1(props: Partial<FormInvoiceStep1Props>) 
               className="form-control"
               type="date"
               id="Due Date"
-              value={due_date}
+              value={moment(due_date).format('YYYY-MM-DD')}
               onChange={(event) => setDue_date(event.target.value)}
             />
           </div>

@@ -84,12 +84,6 @@ input[type=date]:focus::-webkit-datetime-edit {
   background: #D9D9D9;
 }
 
-::-webkit-scrollbar-button:single-button {
-  /* Button */
-  background-color: #D9D9D9;
-  height: 13px;
-}
-
 .input-icon-form {
   padding: 0px 2px;
 }

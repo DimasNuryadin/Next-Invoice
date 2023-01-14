@@ -12,8 +12,8 @@ export default function CreateInvoice() {
   const [alamat_perusahaan, setAlamat_perusahaan] = useState('')
   const [no_invoice, setNo_invoice] = useState('')
   const [company, setCompany] = useState('')
-  const [invoice_date, setInvoice_date] = useState('')
-  const [due_date, setDue_date] = useState('')
+  const [invoice_date, setInvoice_date] = useState(new Date)
+  const [due_date, setDue_date] = useState(new Date)
 
   const router = useRouter();
 
@@ -79,7 +79,7 @@ export default function CreateInvoice() {
 }
 
 // Server side rendering
-export async function getServerSideProps({ req }) {
+export async function getServerSideProps({ req }: any) {
   const { token } = req.cookies
   if (!token) {
     return {

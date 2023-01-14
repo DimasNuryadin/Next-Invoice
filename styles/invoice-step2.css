@@ -3,6 +3,14 @@
   overflow-y: auto;
 }
 
+.create-invoice input {
+  font-size: 15px;
+}
+
+.create-invoice textarea {
+  font-size: 14px;
+}
+
 .invoice-description .head {
   background-color: rgba(243, 115, 53, 0.2);
   border-radius: 5px;

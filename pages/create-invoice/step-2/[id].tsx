@@ -14,9 +14,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import Swal from 'sweetalert2'
 import { useReactToPrint } from 'react-to-print'
 import InvoicePDF from '../../../components/organisms/InvoicePDF'
+import moment from 'moment'
 
 export default function Step2() {
-  // Ambil data dari paramas
+  // Ambil data dari params
   const { query } = useRouter();
   const router = useRouter();
   const [dataStep1, setDataStep1] = useState({
@@ -26,23 +27,23 @@ export default function Step2() {
     invoice_date: new Date,
     due_date: new Date
   })
-  const [payment_instruction, setPayment_instruction] = useState('')
+  const [payment_instruction, setPayment_instruction] = useState('Pembayaran melalui rekening : \n\nPT KAMOJANG MANDIRI \nBANK MANDIRI \nA/C No. 1310001204009 \nREK. DOLLAR PT KAMOJANG MANDIRI \nNo. 131-00-1967023-3')
 
   const [discount, setDiscount] = useState({
     active: false,
-    value: 0
+    value: ''
   })
   const [tax, setTax] = useState({
     active: false,
-    value: 0
+    value: ''
   })
   const [shipping, setShipping] = useState({
     active: false,
-    value: 0
+    value: ''
   })
 
-  const [desc, setDesc] = useState([{ id_invoices: 0, description: "", qty: 1, rate: 0 }])
-  const [dp, setDp] = useState([{ id_invoices: 0, date: new Date, rate: 0 }])
+  const [desc, setDesc] = useState([{ id_invoices: 0, description: "", qty: 1, rate: '' }])
+  const [dp, setDp] = useState([{ id_invoices: 0, date: new Date, rate: '' }])
 
   // Get data Step-1
   useEffect(() => {
@@ -53,7 +54,7 @@ export default function Step2() {
 
   // Line Item Description
   const addLineDescription = () => {
-    setDesc([...desc, { id_invoices: 0, description: "", qty: 1, rate: 0 }])
+    setDesc([...desc, { id_invoices: 0, description: "", qty: 1, rate: '' }])
   }
   const removeLineDescription = (index: any) => {
     const list = [...desc]
@@ -63,7 +64,7 @@ export default function Step2() {
 
   // Line Item DP
   const addLineDP = () => {
-    setDp([...dp, { id_invoices: 0, date: new Date(), rate: 0 }])
+    setDp([...dp, { id_invoices: 0, date: new Date(), rate: '' }])
   }
   const removeLineDP = (index: any) => {
     const list = [...dp]
@@ -99,7 +100,7 @@ export default function Step2() {
   // Total
   let totalDisc = subTotal * (discount.value / 100);
   let totalTax = subTotal * (tax.value / 100);
-  let totalShipping = shipping.value;
+  let totalShipping = Number(shipping.value);
   let total = subTotal - totalDisc + totalTax + totalShipping;
 
   // Sisa
@@ -202,7 +203,7 @@ export default function Step2() {
                     <div className="col-3">
                       <div className="input-group ">
                         <label className="input-group-text bg-white border-none" htmlFor="rate" style={{ fontSize: 15, padding: 6 }} >Rp</label>
-                        <input type="number" className="form-control border-start-0" id="rate" name='rate' style={{ padding: '0px 2px' }} value={data.rate} onChange={(e) => handleChangeDesc(e, index)} />
+                        <input type="number" placeholder='0' className="form-control border-start-0" id="rate" name='rate' style={{ padding: '0px 2px' }} value={data.rate} onChange={(e) => handleChangeDesc(e, index)} />
                       </div>
                     </div>
                     <div className="col-4" >
@@ -221,7 +222,9 @@ export default function Step2() {
                     </div>
                   </div>
                   {desc.length - 1 === index && desc.length < 10 && (
-                    <Button buttonType="btn-secondary" label="Line Item" icon="plus" size="medium" active onClick={addLineDescription} />
+                    <div className='mt-2' style={{ marginLeft: '-10px' }}>
+                      <Button buttonType="btn-secondary" label="Line Item" icon="plus" size="medium" active onClick={addLineDescription} />
+                    </div>
                   )}
                 </div>
               ))}
@@ -245,9 +248,9 @@ export default function Step2() {
 
               {/* Discount Tax Shipping */}
               <div>
-                <ButtonShowItem label='Discount' onClick={() => setDiscount({ active: true, value: 0 })} />
-                <ButtonShowItem label='Tax' onClick={() => setTax({ active: true, value: 0 })} />
-                <ButtonShowItem label='Shipping' onClick={() => setShipping({ active: true, value: 0 })} />
+                <ButtonShowItem label='Discount' onClick={() => setDiscount({ active: true, value: '' })} />
+                <ButtonShowItem label='Tax' onClick={() => setTax({ active: true, value: '' })} />
+                <ButtonShowItem label='Shipping' onClick={() => setShipping({ active: true, value: '' })} />
               </div>
 
               {discount.active && (
@@ -258,12 +261,12 @@ export default function Step2() {
                   </p>
                   <div className="col-3">
                     <div className="input-group float-start my-auto mt-1">
-                      <input type="number" className="form-control border-end-0" id='disc' maxLength={3} value={discount.value} onChange={(event) => setDiscount({ active: true, value: Number(event.target.value) })} />
+                      <input type="number" placeholder='0' className="form-control border-end-0" id='disc' maxLength={3} value={discount.value} onChange={(event) => setDiscount({ active: true, value: event.target.value })} />
                       <label className="input-group-text bg-white border-none" style={{ fontSize: 15 }} htmlFor="disc" >%</label>
                     </div>
                   </div>
                   <div className='col-1 my-auto'>
-                    <button className='bg-white float-end border-0 mt-1' onClick={() => setDiscount({ active: false, value: 0 })}>X</button>
+                    <button className='bg-white float-end border-0 mt-1' onClick={() => setDiscount({ active: false, value: '' })}>X</button>
                   </div>
                 </div>
               )}
@@ -276,12 +279,12 @@ export default function Step2() {
                   </p>
                   <div className="col-3">
                     <div className="input-group float-start my-auto mt-1">
-                      <input type="number" className="form-control border-end-0" id='tax' maxLength={3} value={tax.value} onChange={(event) => setTax({ active: true, value: Number(event.target.value) })} />
+                      <input type="number" placeholder='0' className="form-control border-end-0" id='tax' maxLength={3} value={tax.value} onChange={(event) => setTax({ active: true, value: event.target.value })} />
                       <label className="input-group-text bg-white border-none" style={{ fontSize: 15 }} htmlFor="tax" >%</label>
                     </div>
                   </div>
                   <div className='col-1 my-auto'>
-                    <button className='bg-white float-end border-0 mt-1' onClick={() => setTax({ active: false, value: 0 })}>X</button>
+                    <button className='bg-white float-end border-0 mt-1' onClick={() => setTax({ active: false, value: '' })}>X</button>
                   </div>
                 </div>
               )}
@@ -295,11 +298,11 @@ export default function Step2() {
                   <div className="col-3">
                     <div className="input-group my-auto mt-1 ">
                       <label className="input-group-text bg-white border-none" style={{ fontSize: 15, padding: 6 }} htmlFor="shipping" >Rp</label>
-                      <input type="number" className="form-control border-start-0" style={{ padding: '0px 2px' }} id='shipping' value={shipping.value} onChange={(event) => setShipping({ active: true, value: Number(event.target.value) })} />
+                      <input type="number" placeholder='0' className="form-control border-start-0" style={{ padding: '0px 2px' }} id='shipping' value={shipping.value} onChange={(event) => setShipping({ active: true, value: event.target.value })} />
                     </div>
                   </div>
                   <div className='col-1 my-auto'>
-                    <button className='bg-white float-end border-0 mt-1' onClick={() => setShipping({ active: false, value: 0 })}>X</button>
+                    <button className='bg-white float-end border-0 mt-1' onClick={() => setShipping({ active: false, value: '' })}>X</button>
                   </div>
                 </div>
               )}
@@ -333,18 +336,18 @@ export default function Step2() {
                         )}
                       </div>
                       <p className='col-4 my-auto label text-start' style={{ width: 70 }}>DP {index + 1}</p>
-                      <input className="form-control col" type="date" id="Due Date" name='date' value={data.date} onChange={(e) => handleChangeDp(e, index)} required />
+                      <input className="form-control col" type="date" id="Due Date" name='date' value={moment(data.date).format('YYYY-MM-DD')} onChange={(e) => handleChangeDp(e, index)} required />
                     </div>
                   </div>
                   <div className="col-3">
                     <div className="input-group ">
                       <label className="input-group-text bg-white border-none" style={{ fontSize: 15, padding: 6 }} htmlFor="dp1" >Rp</label>
-                      <input type="number" className="form-control border-start-0" style={{ padding: '0px 2px' }} name="rate" id="dp1" value={data.rate} onChange={(e) => handleChangeDp(e, index)} />
+                      <input type="number" placeholder='0' className="form-control border-start-0" style={{ padding: '0px 2px' }} name="rate" id="dp1" value={data.rate} onChange={(e) => handleChangeDp(e, index)} />
                     </div>
                   </div>
                   {dp.length > 1 && (
                     <div className='col-1 my-auto'>
-                      <button className='bg-white float-end border-0 mt-1' onClick={removeLineDP}>X</button>
+                      <button className='bg-white float-end border-0 mt-1' onClick={() => removeLineDP(index)}>X</button>
                     </div>
                   )}
                 </div>
@@ -373,7 +376,7 @@ export default function Step2() {
                 <textarea
                   className="form-control"
                   id="Alamat Perusahaan"
-                  rows={4}
+                  rows={5}
                   value={payment_instruction}
                   onChange={(event) => setPayment_instruction(event.target.value)}
                 />
