@@ -7,11 +7,12 @@ interface InvoiceItemProps {
   company: string;
   date: string;
   id: number;
-  onClick: React.MouseEventHandler<HTMLButtonElement>;
+  onRead: React.MouseEventHandler<HTMLButtonElement>;
+  onDelete: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 export default function InvoiceItem(props: InvoiceItemProps) {
-  const { company, date, id, onClick } = props;
+  const { company, date, id, onRead, onDelete } = props;
 
   return (
     <div className="mt-4">
@@ -26,10 +27,8 @@ export default function InvoiceItem(props: InvoiceItemProps) {
               <Link href={`/client/update/${id}`}>
                 <Button label='Edit' buttonType="btn-secondary" />
               </Link>
-              <Link href={`/client/read/${id}`}>
-                <Button label='Lihat' buttonType="btn-tertiary" />
-              </Link>
-              <Button label='Hapus' buttonType="btn-quaternary" onClick={onClick} />
+              <Button label='Lihat' buttonType="btn-tertiary" onClick={onRead} />
+              <Button label='Hapus' buttonType="btn-quaternary" onClick={onDelete} />
             </td>
           </tr>
         </tbody>
