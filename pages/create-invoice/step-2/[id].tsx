@@ -140,7 +140,6 @@ export default function Step2() {
             // console.log("response : ", response)
           } else {
             saveDescriptionDP()
-            toast.success("Berhasil tambah data")
             Swal.fire(
               'Disimpan',
               'Data sudah disimpan.',
