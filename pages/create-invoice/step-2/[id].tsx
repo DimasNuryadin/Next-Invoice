@@ -400,6 +400,7 @@ export default function Step2() {
               desc={desc}
               dp={dp}
               subTotal={subTotal}
+              total={total}
               sisa={sisa}
               alamat_perusahaan={dataStep1.alamat_perusahaan}
               no_invoice={dataStep1.no_invoice}
@@ -419,6 +420,7 @@ export default function Step2() {
               desc={desc}
               dp={dp}
               subTotal={subTotal}
+              total={total}
               sisa={sisa}
               alamat_perusahaan={dataStep1.alamat_perusahaan}
               no_invoice={dataStep1.no_invoice}

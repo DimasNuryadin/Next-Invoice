@@ -27,6 +27,7 @@ export default function ClientEditInvoiceStep1() {
   const [down_payment, setDown_payment] = useState([])
 
   const [dataSubtotal, setDataSubtotal] = useState(0);
+  const [dataTotal, setDataTotal] = useState(0);
   const [dataSisa, setDataSisa] = useState(0);
 
   const getInvoiceAPI = useCallback(async (id: any) => {
@@ -68,6 +69,8 @@ export default function ClientEditInvoiceStep1() {
       let totalTax = subTotal * (dataInvoices.tax / 100);
       let totalShipping = dataInvoices.shipping;
       let total = subTotal - totalDisc + totalTax + totalShipping;
+
+      setDataTotal(total)
 
       if (destDownPayments.length > 0) {
         // Sisa
@@ -159,6 +162,7 @@ export default function ClientEditInvoiceStep1() {
               shipping={shipping}
               sisa={dataSisa}
               subTotal={dataSubtotal}
+              total={dataTotal}
             />
           </div>
         </div>

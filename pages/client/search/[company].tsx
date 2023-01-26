@@ -31,6 +31,7 @@ export default function ClientsSearch() {
   const [dataDownPayment, setDataDownPayment] = useState([]);
 
   const [dataSubtotal, setDataSubtotal] = useState(0);
+  const [dataTotal, setDataTotal] = useState(0);
   const [dataSisa, setDataSisa] = useState(0)
 
   const [isPrinting, setIsPrinting] = useState(false);
@@ -94,6 +95,7 @@ export default function ClientsSearch() {
       let totalTax = subTotal * (invoice.tax / 100);
       let totalShipping = invoice.shipping;
       let total = subTotal - totalDisc + totalTax + totalShipping;
+      setDataTotal(total)
 
       if (destDownPayment.length > 0) {
         // console.log(destDownPayment)
@@ -181,6 +183,7 @@ export default function ClientsSearch() {
             desc={dataDescription}
             dp={dataDownPayment}
             subTotal={dataSubtotal}
+            total={dataTotal}
             sisa={dataSisa}
             alamat_perusahaan={invoices.alamat_perusahaan}
             no_invoice={invoices.no_invoice}

@@ -34,6 +34,12 @@
 .invoice-pdf .bill {
   color: #000;
   font-size: 17px;
+  font-weight: 400;
+}
+
+.invoice-pdf .date {
+  color: #000;
+  font-size: 17px;
   line-height: 10px;
   font-weight: 400;
 }

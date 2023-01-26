@@ -12,6 +12,7 @@ interface InvoiceProps {
   desc?: Desc[];
   dp?: Dp[];
   subTotal?: number;
+  total?: number;
   sisa?: number;
   discount?: number;
   tax?: number,
@@ -34,6 +35,7 @@ export default function Invoice(props: Partial<InvoiceProps>) {
     desc,
     dp,
     subTotal,
+    total,
     sisa,
     alamat_perusahaan,
     no_invoice,
@@ -45,6 +47,26 @@ export default function Invoice(props: Partial<InvoiceProps>) {
     shipping,
     payment_instruction,
   } = props;
+
+  const Total = () => {
+    if (discount > 0 || tax > 0 || shipping > 0) {
+      return (
+        <div className="row mb-1 subtotal">
+          <p className='col-6'></p>
+          <p className='col-3 head-table'>TOTAL</p>
+          <p className='col-3'>
+            <NumericFormat
+              prefix="Rp. "
+              value={total}
+              displayType="text"
+              thousandSeparator="."
+              decimalSeparator=","
+            />
+          </p>
+        </div>
+      )
+    }
+  }
 
   return (
     <div>
@@ -68,8 +90,8 @@ export default function Invoice(props: Partial<InvoiceProps>) {
           </div>
           <div className="col text-end">
             <p className='head-table'>Invoice No : {no_invoice}</p>
-            <p className='bill'>Invoice Date : {moment(invoice_date).format('DD MMM YY')}</p>
-            <p className='bill'>Due Date :  {moment(due_date).format('DD MMM YY')}</p>
+            <p className='date'>Invoice Date : {moment(invoice_date).format('DD MMM YY')}</p>
+            <p className='date'>Due Date :  {moment(due_date).format('DD MMM YY')}</p>
           </div>
         </div>
         <br />
@@ -174,6 +196,8 @@ export default function Invoice(props: Partial<InvoiceProps>) {
             </p>
           </div>
         )}
+
+        <Total />
 
         {/* DP */}
         {dp && (
