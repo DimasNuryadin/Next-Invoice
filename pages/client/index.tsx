@@ -8,6 +8,7 @@ import Swal from 'sweetalert2'
 import { ToastContainer, toast } from 'react-toastify';
 import { useReactToPrint } from 'react-to-print';
 import InvoicePDF from '../../components/organisms/InvoicePDF';
+import Loading from '../../components/molecules/Loading';
 
 export default function Clients() {
   const [invoicesList, setInvoicesList] = useState([])
@@ -30,6 +31,7 @@ export default function Clients() {
   const [dataSisa, setDataSisa] = useState(0)
 
   const [isPrinting, setIsPrinting] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Callback
   const getAllInvoice = useCallback(async () => {
@@ -55,11 +57,13 @@ export default function Clients() {
     onAfterPrint: () => {
       // Reset the Promise resolve so we can print again
       setIsPrinting(false);
+      setIsLoading(false);
     },
     documentTitle: `Invoice`,
   })
 
   const onRead = async (id: any) => {
+    setIsLoading(true);
     const invoice = await getInvoices(id);
     const description = await getDescription(id);
     const down_payment = await getDownPayment(id);
@@ -138,6 +142,10 @@ export default function Clients() {
 
   return (
     <div className='invoice-page'>
+      {isLoading && (
+        <Loading />
+      )}
+
       <Sidebar url="client" />
       <div className='dashboard'>
         <NavBar />

@@ -9,8 +9,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import InvoicePDF from '../../../components/organisms/InvoicePDF';
 import { useReactToPrint } from 'react-to-print';
-
-
+import Loading from '../../../components/molecules/Loading';
 
 export default function ClientsSearch() {
   const { query, isReady } = useRouter();
@@ -35,6 +34,7 @@ export default function ClientsSearch() {
   const [dataSisa, setDataSisa] = useState(0)
 
   const [isPrinting, setIsPrinting] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Callback
   const getAllInvoice = useCallback(async (company: any) => {
@@ -66,11 +66,13 @@ export default function ClientsSearch() {
     onAfterPrint: () => {
       // Reset the Promise resolve so we can print again
       setIsPrinting(false);
+      setIsLoading(false);
     },
     documentTitle: `Invoice`,
   })
 
   const onRead = async (id: any) => {
+    setIsLoading(true);
     const invoice = await getInvoices(id);
     const description = await getDescription(id);
     const down_payment = await getDownPayment(id);
@@ -149,6 +151,10 @@ export default function ClientsSearch() {
 
   return (
     <div className='invoice-page'>
+      {isLoading && (
+        <Loading />
+      )}
+
       <Sidebar url="client" />
       <div className='dashboard'>
         <NavBar />
