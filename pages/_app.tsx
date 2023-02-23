@@ -1,6 +1,7 @@
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
 import '../styles/utilities.css'
+import '../styles/home.css'
 import '../styles/login.css'
 import '../styles/invoice-step1.css'
 import '../styles/invoice-step2.css'
