@@ -27,52 +27,79 @@
 .footer .gap {
   background-color: #FE7019;
   border-radius: 20px 0px 0px 20px;
-  height: 200px;
+  height: 360px;
   width: 34px;
-  margin-top: 50px;
+  margin-top: 58px;
 }
 
 .footer .email-form {
   background-color: #fff;
   border-radius: 20px;
-  flex: 0 0 25em;
+  flex: 0 0 32em;
   height: fit-content;
-  padding: 30px;
+  padding: 32px;
+}
+
+.footer .email-form .title {
+  color: #000;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 6px;
+}
+
+.email-form .input-email input::placeholder {
+  color: #BFBFBF;
+  opacity: 1;
+}
+
+.email-form .input-email input {
+  font-size: 15px;
+  padding: 0px 10px 5px 0px;
+  display: block;
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #BFBFBF;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.email-form .input-email input:focus {
+  outline: none;
+}
+
+.email-form .input-message {
+  width: 100%;
+  font-size: 15px;
+  padding: 8px;
+  border: 1px solid #919191;
+  border-radius: 10px;
+}
+
+.email-form .input-message::placeholder {
+  color: #BFBFBF;
+  opacity: 1;
+}
+
+.email-form .input-message:focus {
+  outline: none;
 }
 
 .footer .contact {
   background-color: #FE7019;
   border-radius: 0px 20px 20px 0px;
-  height: 200px;
-  margin-top: 50px;
+  height: 360px;
+  margin-top: 58px;
+  padding: 36px 44px 44px 40px;
 }
 
-.input-email {
-  padding-top: 50px;
+.contact .title {
+  color: #fff;
+  font-size: 20px;
+  font-weight: 700;
 }
 
-.input-email input::placeholder {
-  /* Chrome, Firefox, Opera, Safari 10.1+ */
-  color: #BFBFBF;
-  opacity: 1;
-  /* Firefox */
-}
-
-.input-email input {
-  font-size: 17px;
-  padding: 0px 10px 5px 5px;
-  display: block;
-  width: 280px;
-  border: none;
-  border-bottom: 1px solid #BFBFBF;
-  background-color: rgba(0, 0, 0, 0);
-  color: #BFBFBF;
-}
-
-.input-email input:focus {
-  outline: none;
-}
-
-.input-email .image-email {
-  margin-top: 4px;
+.footer .contact p {
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+  max-width: 210px;
 }
