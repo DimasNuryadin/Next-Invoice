@@ -1,8 +1,14 @@
 .home {
   background-image: url('../public/img/bg-home.png');
   box-shadow: inset 0 0 0 1000px rgba(19, 19, 19, 0.5);
-  padding: 50px 120px;
+  padding: 18px 22px;
   min-height: 100vh;
+  width: 100%;
+}
+
+.home .logo {
+  height: 30px;
+  width: 150px;
 }
 
 .hero-banner {
@@ -11,11 +17,11 @@
 }
 
 .hero-banner .title {
-  font-size: 40px;
+  font-size: 30px;
 }
 
 .hero-banner .description {
-  font-size: 15px;
+  font-size: 12px;
   line-height: 25px;
 }
 
@@ -25,6 +31,7 @@
 }
 
 .footer .gap {
+  display: none;
   background-color: #FE7019;
   border-radius: 20px 0px 0px 20px;
   height: 360px;
@@ -35,17 +42,16 @@
 .footer .email-form {
   background-color: #fff;
   border-radius: 20px;
-  flex: 0 0 32em;
+  flex: 1 1 18em;
   min-height: 450px;
   height: fit-content;
-  padding: 32px;
+  padding: 25px;
 }
 
 .footer .email-form .title {
   color: #000;
   font-weight: 700;
-  font-size: 20px;
-  line-height: 6px;
+  font-size: 16px;
 }
 
 .email-form .input-email input::placeholder {
@@ -54,7 +60,7 @@
 }
 
 .email-form .input-email input {
-  font-size: 15px;
+  font-size: 12px;
   padding: 0px 10px 5px 0px;
   display: block;
   width: 100%;
@@ -69,7 +75,7 @@
 
 .email-form .input-message {
   width: 100%;
-  font-size: 15px;
+  font-size: 12px;
   padding: 8px;
   border: 1px solid #919191;
   border-radius: 10px;
@@ -86,21 +92,144 @@
 
 .footer .contact {
   background-color: #FE7019;
-  border-radius: 0px 20px 20px 0px;
-  height: 360px;
-  margin-top: 58px;
-  padding: 36px 44px 44px 40px;
+  border-radius: 20px;
+  margin-top: 16px;
+  padding: 18px 20px 20px 20px;
+  flex: 1 1 100px;
 }
 
 .contact .title {
   color: #fff;
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.contact img {
+  width: 18px;
+  height: 18px;
 }
 
 .footer .contact p {
   color: #fff;
   font-weight: 700;
-  font-size: 15px;
+  font-size: 11px;
   max-width: 210px;
+}
+
+@media screen and (min-width: 411px) {
+  .home .logo {
+    height: 40px;
+    width: 180px;
+  }
+
+  .hero-banner .title {
+    font-size: 34px;
+  }
+
+  .hero-banner .description {
+    font-size: 13px;
+    line-height: 25px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .home {
+    padding: 50px 120px;
+  }
+
+  .home .logo {
+    height: 50px;
+    width: 250px;
+  }
+
+  .hero-banner .title {
+    font-size: 40px;
+  }
+
+  .hero-banner .description {
+    font-size: 15px;
+  }
+
+  .footer .email-form {
+    padding: 32px;
+  }
+
+  .footer .email-form .title {
+    font-size: 20px;
+    line-height: 6px;
+  }
+
+  .email-form .input-email input {
+    font-size: 15px;
+  }
+
+  .email-form .input-message {
+    font-size: 15px;
+  }
+
+  .footer .contact {
+    height: 300px;
+    margin-top: 26px;
+    padding: 36px 14em 36px 34px;
+  }
+
+  .contact .title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 35px;
+  }
+
+  .contact .info {
+    margin-top: 12px;
+  }
+
+  .contact img {
+    width: 28px;
+    height: 28px;
+  }
+
+  .footer .contact p {
+    font-weight: 700;
+    font-size: 14px;
+    max-width: 210px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .home .logo {
+    height: 80px;
+    width: 480px;
+  }
+
+  .footer .gap {
+    display: block;
+    margin-left: 40px;
+  }
+
+  .footer .contact {
+    border-radius: 0px 20px 20px 0px;
+    height: 360px;
+    margin-top: 58px;
+    padding: 36px 34px 44px 34px;
+    flex: 0 0 100px;
+  }
+
+  .contact .info {
+    margin-top: 22px;
+  }
+
+  .footer .contact p {
+    font-size: 15px;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .footer .email-form {
+    flex: 0 0 32em;
+  }
+
+  .footer .contact {
+    padding: 36px 44px 44px 40px;
+  }
 }

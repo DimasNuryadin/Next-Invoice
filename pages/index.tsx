@@ -1,4 +1,3 @@
-import Image from "next/image"
 import Button from "../components/atoms/Button"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -52,7 +51,7 @@ export default function Home() {
         <nav className="navbar mb-5">
           <div className="container-fluid">
             <a className="navbar-brand" href="#" style={{ marginLeft: '-10px' }}>
-              <Image src="/img/logo-1.png" height={80} width={500} alt="logo" />
+              <img className="logo" src="/img/logo-1.png" alt="logo" />
             </a>
             <Link href='/login'>
               <Button buttonType="btn-primary" label="Login" />
@@ -113,20 +112,20 @@ export default function Home() {
             </div>
 
             <div className="contact">
-              <h2 className="title mb-5">Contact Us</h2>
+              <h2 className="title">Contact Us</h2>
 
-              <div className="d-flex flex-row mb-4">
-                <Image src="/icon/phone-light.svg" width={28} height={28} alt="Phone"></Image>
+              <div className="d-flex flex-row info">
+                <img src="/icon/phone-light.svg" alt="Phone"></img>
                 <p className="ms-3">0812-2025-9288</p>
               </div>
 
-              <div className="d-flex flex-row mb-4">
-                <Image src="/icon/email-light.svg" width={28} height={28} alt="Phone"></Image>
+              <div className="d-flex flex-row info">
+                <img src="/icon/email-light.svg" alt="Email"></img>
                 <p className="ms-3">kamojangmandiri1@gmail.com</p>
               </div>
 
-              <div className="d-flex flex-row ">
-                <Image src="/icon/address-light.svg" width={28} height={28} alt="Phone"></Image>
+              <div className="d-flex flex-row info">
+                <img src="/icon/address-light.svg" alt="Address"></img>
                 <p className="ms-3">Jl. Raya Kamojang No. 74-Kab. Bandung</p>
               </div>
             </div>
