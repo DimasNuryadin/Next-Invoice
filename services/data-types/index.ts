@@ -36,3 +36,10 @@ export interface FormDownPayment {
   date: Date;
   rate: number;
 }
+
+export interface FormSendEmail {
+  nama: string;
+  phone: string;
+  email: string;
+  message: string;
+}

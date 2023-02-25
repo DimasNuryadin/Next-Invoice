@@ -1,6 +1,6 @@
 import axios from 'axios';
 import callApi from '../config/api';
-import { FormDescription, FormDownPayment, FormInvoicesStep1, FormInvoicesStep2 } from './data-types';
+import { FormDescription, FormDownPayment, FormInvoicesStep1, FormInvoicesStep2, FormSendEmail } from './data-types';
 const ROOT_API = process.env.NEXT_PUBLIC_API;
 
 export async function getAllInvoices() {
@@ -127,5 +127,15 @@ export async function deleteDownPayment(id_invoices: any) {
   return callApi({
     url,
     method: 'DELETE',
+  })
+}
+
+export async function sendEmail(data: FormSendEmail) {
+  const url = `${ROOT_API}/users/send_email`;
+
+  return callApi({
+    url,
+    method: 'POST',
+    data: data
   })
 }

@@ -10,7 +10,7 @@ export default function NavBar() {
 
   const onLogout = () => {
     Cookies.remove('token');
-    router.push('/')
+    router.push('/login')
   }
 
   return (

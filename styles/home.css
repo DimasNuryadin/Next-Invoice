@@ -36,6 +36,7 @@
   background-color: #fff;
   border-radius: 20px;
   flex: 0 0 32em;
+  min-height: 450px;
   height: fit-content;
   padding: 32px;
 }

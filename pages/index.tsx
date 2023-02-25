@@ -3,20 +3,51 @@ import Button from "../components/atoms/Button"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useState } from 'react'
-import { setLogin } from "../services/auth";
-import Cookies from 'js-cookie'
 import Link from "next/link";
+import { sendEmail } from "../services/user";
+import Loading from "../components/molecules/Loading"
 
 export default function Home() {
+  const [nama, setNama] = useState('')
+  const [phone, setPhone] = useState('')
   const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [message, setMessage] = useState('')
+
+  const [isLoading, setIsLoading] = useState(false)
 
   const onSubmit = async () => {
+    setIsLoading(true)
+    const data = {
+      nama,
+      phone,
+      email,
+      message
+    }
+
+    if (!nama || !phone || !email || !message) {
+      toast.error("Semua data wajib diisi!!")
+      setIsLoading(false)
+    } else {
+      const response = await sendEmail(data);
+      if (response.error) {
+        toast.error(response.message)
+        setIsLoading(false)
+      } else {
+        toast.success("Pesan berhasil terkirim")
+        setNama('')
+        setPhone('')
+        setEmail('')
+        setMessage('')
+        setIsLoading(false)
+      }
+    }
+
 
   }
 
   return (
     <div>
+      {isLoading && <Loading />}
       <div className="home">
         <nav className="navbar mb-5">
           <div className="container-fluid">
@@ -43,13 +74,17 @@ export default function Home() {
                 <input
                   type="text"
                   placeholder="Full Name"
+                  value={nama}
+                  onChange={(event) => setNama(event.target.value)}
                   required
                 />
               </div>
               <div className="input-email mb-4 pb-2">
                 <input
-                  type="text"
+                  type="number"
                   placeholder="Phone Number"
+                  value={phone}
+                  onChange={(event) => setPhone(event.target.value)}
                   required
                 />
               </div>
@@ -57,13 +92,23 @@ export default function Home() {
                 <input
                   type="email"
                   placeholder="Email"
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)}
                   required
                 />
               </div>
-              <textarea className="input-message mb-2" name="message" placeholder="Message" rows={6} />
+              <textarea
+                className="input-message mb-2"
+                name="message"
+                placeholder="Message"
+                rows={6}
+                value={message}
+                onChange={(event) => setMessage(event.target.value)}
+                required
+              />
 
               <div className="float-end">
-                <Button buttonType="btn-primary" label="Send" />
+                <Button onClick={onSubmit} buttonType="btn-primary" label="Send" />
               </div>
             </div>
 

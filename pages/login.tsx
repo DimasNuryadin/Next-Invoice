@@ -6,24 +6,31 @@ import { useState } from 'react'
 import { setLogin } from "../services/auth";
 import { useRouter } from "next/router";
 import Cookies from 'js-cookie'
+import Loading from "../components/molecules/Loading";
 
 export default function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
+  const [isLoading, setIsLoading] = useState(false)
+
   const router = useRouter()
 
   const onSubmit = async () => {
+    setIsLoading(true);
+
     const data = {
       email,
       password
     }
     if (!email || !password) {
       toast.error("Email dan Password wajib diisi!!!");
+      setIsLoading(false)
     } else {
       const response = await setLogin(data)
       if (response.error) {
         toast.error(response.message)
+        setIsLoading(false)
       } else {
         toast.success("Login Berhasil")
         const token = response.data.token
@@ -32,12 +39,14 @@ export default function Login() {
         // console.log("Base 64 : ", tokenBase64)
         Cookies.set('token', tokenBase64, { expires: 1 }) // 1 day
         router.push('/create-invoice');
+        setIsLoading(false)
       }
     }
   }
 
   return (
     <div>
+      {isLoading && <Loading />}
       <div className="bg-yellow">
         <Image src="/img/logo-1.png" height={80} width={500} alt="logo" />
         <div className="text-center bg-login">
