@@ -48,7 +48,7 @@ export default function Login() {
     <div>
       {isLoading && <Loading />}
       <div className="bg-yellow">
-        <Image src="/img/logo-1.png" height={80} width={500} alt="logo" />
+        <Image className="logo" src="/img/logo-1.png" height={80} width={500} alt="logo" />
         <div className="text-center bg-login">
           <h1 className="title-login">LOGIN</h1>
           <div className="input-login row">

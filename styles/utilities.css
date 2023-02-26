@@ -14,11 +14,11 @@
 /* Button */
 .button {
   border: none;
-  padding: 5px 22px;
+  padding: 4px 18px;
+  font-size: 14px;
   color: #fff;
   border-radius: 10px;
   font-weight: 700;
-  font-size: 19px;
 }
 
 .btn-primary {
@@ -95,4 +95,18 @@ input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+
+@media screen and (min-width: 411px) {
+  .button {
+    padding: 5px 20px;
+    font-size: 17px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .button {
+    padding: 5px 22px;
+    font-size: 19px;
+  }
 }

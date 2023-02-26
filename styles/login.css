@@ -13,6 +13,11 @@
   padding-bottom: 80px;
 }
 
+.bg-yellow .logo {
+  height: 44px;
+  width: 220px;
+}
+
 .bg-login {
   background: linear-gradient(133.39deg, rgba(255, 255, 255, 0.4) 14.76%, rgba(255, 255, 255, 0.1) 81.82%);
   box-shadow: 0px 4px 24px -1px #FE7019;
@@ -22,7 +27,7 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  padding: 48px 204px;
+  padding: 20px 24px;
 }
 
 .title-login {
@@ -59,4 +64,16 @@
   color: #EFEFEF;
   opacity: 1;
   /* Firefox */
+}
+
+@media screen and (min-width: 1024px) {
+  .bg-yellow .logo {
+    height: 80px;
+    width: 500px;
+  }
+
+  .bg-login {
+    margin-top: 50px;
+    padding: 48px 204px;
+  }
 }
