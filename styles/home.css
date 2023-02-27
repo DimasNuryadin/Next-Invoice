@@ -4,6 +4,10 @@
   padding: 18px 22px;
   min-height: 100vh;
   width: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  align-items: center;
 }
 
 .home .logo {
