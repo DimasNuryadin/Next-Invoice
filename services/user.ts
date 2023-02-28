@@ -13,15 +13,21 @@ export async function getAllInvoices() {
 }
 
 export async function getInvoices(id: any) {
+  // Cara lama Req API
+  const config = {
+    headers: {
+    'Content-Type': 'application/json', 
+    'Authorization': 'Bearer ' + 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbiIsInBhc3N3b3JkIjoiYWRtaW4iLCJpYXQiOjE2Nzc1OTExNjksImV4cCI6MTY3NzYxMjc2OX0.EhGaCAeGosLeemfXOPTLWmZVkrpOWXmtt8eYYni2KYc'
+    }
+  }
   const URL = `invoices/${id}`
-
-  const response = await axios.get(`${ROOT_API}/${URL}`);
+  const response = await axios.get(`${ROOT_API}/${URL}`, config);
   const axiosResponse = response.data;
-
   return axiosResponse.data
 }
 
 export async function getInvoicesCompany(company: any) {
+  // cara baru Req API
   const url = `${ROOT_API}/invoices/company/${company}`;
 
   return callApi({
