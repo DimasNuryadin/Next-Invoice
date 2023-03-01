@@ -2,23 +2,32 @@ import axios from 'axios';
 import callApi from '../config/api';
 import { FormDescription, FormDownPayment, FormInvoicesStep1, FormInvoicesStep2, FormSendEmail } from './data-types';
 const ROOT_API = process.env.NEXT_PUBLIC_API;
+import Cookies from 'js-cookie';
 
 export async function getAllInvoices() {
   const url = `${ROOT_API}/invoices`;
 
   return callApi({
     url,
-    method: 'GET'
+    method: 'GET',
+    token: true,
   })
 }
 
 export async function getInvoices(id: any) {
   // Cara lama Req API
-  const config = {
-    headers: {
-    'Content-Type': 'application/json', 
-    'Authorization': 'Bearer ' + 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbiIsInBhc3N3b3JkIjoiYWRtaW4iLCJpYXQiOjE2Nzc1OTExNjksImV4cCI6MTY3NzYxMjc2OX0.EhGaCAeGosLeemfXOPTLWmZVkrpOWXmtt8eYYni2KYc'
+  let headers = {};
+  const tokenCookies = Cookies.get('token');
+  if (tokenCookies) {
+    const jwtToken = atob(tokenCookies);
+    headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${jwtToken}`
     }
+  }
+
+  const config = {
+    headers,
   }
   const URL = `invoices/${id}`
   const response = await axios.get(`${ROOT_API}/${URL}`, config);
@@ -33,7 +42,8 @@ export async function getInvoicesCompany(company: any) {
   return callApi({
     url,
     method: 'GET',
-    data: company
+    data: company,
+    token: true,
   })
 }
 
@@ -43,7 +53,8 @@ export async function createInvoices(data: FormInvoicesStep1) {
   return callApi({
     url,
     method: 'POST',
-    data: data
+    data: data,
+    token: true,
   })
 }
 
@@ -54,6 +65,7 @@ export async function updateInvoicesStep1(data: FormInvoicesStep1, id: any) {
     url,
     method: 'PATCH',
     data: data,
+    token: true,
   })
 }
 
@@ -64,6 +76,7 @@ export async function updateInvoicesStep2(data: FormInvoicesStep2, id: any) {
     url,
     method: 'PATCH',
     data: data,
+    token: true,
   })
 }
 
@@ -73,6 +86,7 @@ export async function deleteInvoices(id_invoices: any) {
   return callApi({
     url,
     method: 'DELETE',
+    token: true,
   })
 }
 
@@ -84,6 +98,7 @@ export async function getDescription(id: any) {
   return callApi({
     url,
     method: 'GET',
+    token: true,
   })
 }
 
@@ -93,7 +108,8 @@ export async function createDescription(data: FormDescription) {
   return callApi({
     url,
     method: 'POST',
-    data: data
+    data: data,
+    token: true,
   })
 }
 
@@ -103,6 +119,7 @@ export async function deleteDescription(id_invoices: any) {
   return callApi({
     url,
     method: 'DELETE',
+    token: true,
   })
 }
 
@@ -113,7 +130,8 @@ export async function getDownPayment(id: any) {
 
   return callApi({
     url,
-    method: 'GET'
+    method: 'GET',
+    token: true,
   })
 }
 
@@ -123,7 +141,8 @@ export async function createDownPayment(data: FormDownPayment) {
   return callApi({
     url,
     method: 'POST',
-    data: data
+    data: data,
+    token: true,
   })
 }
 
@@ -133,6 +152,7 @@ export async function deleteDownPayment(id_invoices: any) {
   return callApi({
     url,
     method: 'DELETE',
+    token: true,
   })
 }
 
@@ -142,6 +162,7 @@ export async function sendEmail(data: FormSendEmail) {
   return callApi({
     url,
     method: 'POST',
-    data: data
+    data: data,
+    token: true,
   })
 }
