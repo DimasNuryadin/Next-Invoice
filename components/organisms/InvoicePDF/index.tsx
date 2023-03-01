@@ -48,6 +48,11 @@ export default function InvoicePDF(props: Partial<InvoicePDFProps>) {
     payment_instruction,
   } = props;
 
+  // Margin Halaman
+  const getPageMargins = () => {
+    return `@page { margin: 40px 0px 39px 0px !important; }`;
+  };
+
   const Total = () => {
     if (discount > 0 || tax > 0 || shipping > 0) {
       return (
@@ -70,6 +75,7 @@ export default function InvoicePDF(props: Partial<InvoicePDFProps>) {
 
   return (
     <div>
+      <style>{getPageMargins()}</style>
       <div className="invoice-pdf">
         <div className="row">
           <div className="col">

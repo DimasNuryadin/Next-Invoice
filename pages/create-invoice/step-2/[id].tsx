@@ -439,3 +439,23 @@ export default function Step2() {
     </div>
   )
 }
+
+// Server side rendering
+export async function getServerSideProps({ req }: any) {
+  const { token } = req.cookies
+  if (!token) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      }
+    }
+  }
+
+  // console.log("token: ", token)
+  return {
+    props: {
+      user: {},
+    }
+  }
+}
