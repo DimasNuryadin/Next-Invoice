@@ -13,8 +13,8 @@ export interface FormInvoicesStep1 {
   alamat_perusahaan: string;
   no_invoice: string;
   company: string;
-  invoice_date: Date;
-  due_date: Date;
+  invoice_date: string;
+  due_date: string;
 }
 
 export interface FormInvoicesStep2 {
@@ -33,7 +33,7 @@ export interface FormDescription {
 
 export interface FormDownPayment {
   id_invoices: number;
-  date: Date;
+  date: string;
   rate: number;
 }
 

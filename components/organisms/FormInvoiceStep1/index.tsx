@@ -4,13 +4,13 @@ interface FormInvoiceStep1Props {
   alamat_perusahaan: string,
   no_invoice: string,
   company: string,
-  invoice_date: Date,
-  due_date: Date,
+  invoice_date: string,
+  due_date: string,
   setAlamat_perusahaan: (alamat_perusahaan: string) => void;
   setNo_invoice: (no_invoice: string) => void;
   setCompany: (company: string) => void;
-  setInvoice_date: (invoice_date: Date) => void;
-  setDue_date: (due_date: Date) => void;
+  setInvoice_date: (invoice_date: string) => void;
+  setDue_date: (due_date: string) => void;
   onSubmit?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
@@ -38,7 +38,7 @@ export default function FormInvoiceStep1(props: Partial<FormInvoiceStep1Props>) 
           id="Alamat Perusahaan"
           rows={3}
           value={alamat_perusahaan}
-          onChange={(event) => setAlamat_perusahaan(event.target.value)}
+          onChange={(event) => setAlamat_perusahaan?.(event.target.value)}
         />
         <br />
         <label htmlFor="Invoice No" className="form-label label">Invoice No</label>
@@ -47,7 +47,7 @@ export default function FormInvoiceStep1(props: Partial<FormInvoiceStep1Props>) 
           type="text"
           id="Invoice No"
           value={no_invoice}
-          onChange={(event) => setNo_invoice(event.target.value)}
+          onChange={(event) => setNo_invoice?.(event.target.value)}
         />
         <br />
         <label htmlFor="Bill to" className="form-label label">Bill to</label>
@@ -56,7 +56,7 @@ export default function FormInvoiceStep1(props: Partial<FormInvoiceStep1Props>) 
           type="text"
           id="Bill to"
           value={company}
-          onChange={(event) => setCompany(event.target.value)}
+          onChange={(event) => setCompany?.(event.target.value)}
         />
         <br />
         <div className="row">
@@ -67,7 +67,7 @@ export default function FormInvoiceStep1(props: Partial<FormInvoiceStep1Props>) 
               type="date"
               id="Invoice Date"
               value={moment(invoice_date).format('YYYY-MM-DD')}
-              onChange={(event) => setInvoice_date(event.target.value)}
+              onChange={(event) => setInvoice_date?.(event.target.value)}
             />
           </div>
           <div className="col">
@@ -77,7 +77,7 @@ export default function FormInvoiceStep1(props: Partial<FormInvoiceStep1Props>) 
               type="date"
               id="Due Date"
               value={moment(due_date).format('YYYY-MM-DD')}
-              onChange={(event) => setDue_date(event.target.value)}
+              onChange={(event) => setDue_date?.(event.target.value)}
             />
           </div>
         </div>

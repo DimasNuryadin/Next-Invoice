@@ -6,8 +6,8 @@ interface InvoiceProps {
   alamat_perusahaan: string;
   no_invoice: string;
   company: string;
-  invoice_date: Date;
-  due_date: Date;
+  invoice_date: string;
+  due_date: string;
   payment_instruction: string;
   desc?: Desc[];
   dp?: Dp[];
@@ -26,7 +26,7 @@ interface Desc {
 }
 
 interface Dp {
-  date: Date;
+  date: string;
   rate: number;
 }
 
@@ -49,7 +49,7 @@ export default function Invoice(props: Partial<InvoiceProps>) {
   } = props;
 
   const Total = () => {
-    if (discount > 0 || tax > 0 || shipping > 0) {
+    if (discount! > 0 || tax! > 0 || shipping! > 0) {
       return (
         <div className="row mb-1 subtotal">
           <p className='col-6'></p>
@@ -149,7 +149,7 @@ export default function Invoice(props: Partial<InvoiceProps>) {
           </p>
         </div>
 
-        {discount > 0 && (
+        {discount! > 0 && (
           <div className="row subtotal">
             <p className='col-6'></p>
             <p className='col-3 head-table'>DISCOUNT</p>
@@ -165,7 +165,7 @@ export default function Invoice(props: Partial<InvoiceProps>) {
           </div>
         )}
 
-        {tax > 0 && (
+        {tax! > 0 && (
           <div className="row subtotal">
             <p className='col-6'></p>
             <p className='col-3 head-table'>TAX</p>
@@ -181,7 +181,7 @@ export default function Invoice(props: Partial<InvoiceProps>) {
           </div>
         )}
 
-        {shipping > 0 && (
+        {shipping! > 0 && (
           <div className="row mb-1 subtotal">
             <p className='col-6'></p>
             <p className='col-3 head-table'>SHIPPING</p>
@@ -197,6 +197,7 @@ export default function Invoice(props: Partial<InvoiceProps>) {
           </div>
         )}
 
+        {/* @ts-expect-error Server Component */}
         <Total />
 
         {/* DP */}

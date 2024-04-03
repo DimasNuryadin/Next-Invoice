@@ -16,8 +16,8 @@ export default function ClientEditInvoiceStep1() {
   const [alamat_perusahaan, setAlamat_perusahaan] = useState('')
   const [no_invoice, setNo_invoice] = useState('')
   const [company, setCompany] = useState('')
-  const [invoice_date, setInvoice_date] = useState(new Date)
-  const [due_date, setDue_date] = useState(new Date)
+  const [invoice_date, setInvoice_date] = useState('')
+  const [due_date, setDue_date] = useState('')
   const [payment_instruction, setPayment_instruction] = useState('');
   const [discount, setDiscount] = useState(0);
   const [tax, setTax] = useState(0)
