@@ -24,26 +24,26 @@ export default function Step2() {
     alamat_perusahaan: '',
     no_invoice: '',
     company: '',
-    invoice_date: new Date,
-    due_date: new Date
+    invoice_date: '',
+    due_date: ''
   })
   const [payment_instruction, setPayment_instruction] = useState('')
 
   const [discount, setDiscount] = useState({
     active: false,
-    value: ''
+    value: 0
   })
   const [tax, setTax] = useState({
     active: false,
-    value: ''
+    value: 0
   })
   const [shipping, setShipping] = useState({
     active: false,
-    value: ''
+    value: 0
   })
 
-  const [desc, setDesc] = useState([{ id_invoices: 0, description: "", qty: 1, rate: '' }])
-  const [dp, setDp] = useState([{ id_invoices: 0, date: new Date, rate: '' }])
+  const [desc, setDesc] = useState([{ id_invoices: 0, description: "", qty: 1, rate: 0 }])
+  const [dp, setDp] = useState([{ id_invoices: 0, date: "", rate: 0 }])
 
   const getInvoiceAPI = useCallback(async (id: any) => {
     // Get Description & Down Payment
@@ -80,7 +80,7 @@ export default function Step2() {
 
   // Line Item Description
   const addLineDescription = () => {
-    setDesc([...desc, { id_invoices: 0, description: "", qty: 1, rate: '' }])
+    setDesc([...desc, { id_invoices: 0, description: "", qty: 1, rate: 0 }])
   }
   const removeLineDescription = (index: any) => {
     const list = [...desc]
@@ -90,7 +90,7 @@ export default function Step2() {
 
   // Line Item DP
   const addLineDP = () => {
-    setDp([...dp, { id_invoices: 0, date: new Date(), rate: '' }])
+    setDp([...dp, { id_invoices: 0, date: "", rate: 0 }])
   }
   const removeLineDP = (index: any) => {
     const listDP = [...dp]
@@ -115,7 +115,7 @@ export default function Step2() {
   }
 
   // Subtotal
-  let subTotal1 = desc.map(x => x.qty * x.rate)
+  let subTotal1 = desc.map((x: any) => x.qty * x.rate)
   // console.log("Amount :", subTotal1)
   const subTotal = subTotal1.reduce(jumlahArray)
   function jumlahArray(total: number, value: number) {
@@ -283,9 +283,9 @@ export default function Step2() {
 
               {/* Discount Tax Shipping */}
               <div>
-                <ButtonShowItem label='Discount' onClick={() => setDiscount({ active: true, value: '' })} />
-                <ButtonShowItem label='Tax' onClick={() => setTax({ active: true, value: '' })} />
-                <ButtonShowItem label='Shipping' onClick={() => setShipping({ active: true, value: '' })} />
+                <ButtonShowItem label='Discount' onClick={() => setDiscount({ active: true, value: 0 })} />
+                <ButtonShowItem label='Tax' onClick={() => setTax({ active: true, value: 0 })} />
+                <ButtonShowItem label='Shipping' onClick={() => setShipping({ active: true, value: 0 })} />
               </div>
 
               {discount.active && (
@@ -296,12 +296,12 @@ export default function Step2() {
                   </p>
                   <div className="col-3">
                     <div className="input-group float-start my-auto mt-1">
-                      <input type="number" placeholder='0' className="form-control border-end-0" id='disc' value={discount.value} onChange={(event) => setDiscount({ active: true, value: event.target.value })} />
+                      <input type="number" placeholder='0' className="form-control border-end-0" id='disc' value={discount.value} onChange={(event) => setDiscount({ active: true, value: Number(event.target.value) })} />
                       <label className="input-group-text bg-white border-none" style={{ fontSize: 15 }} htmlFor="disc" >%</label>
                     </div>
                   </div>
                   <div className='col-1 my-auto'>
-                    <button className='bg-white float-end border-0 mt-1' onClick={() => setDiscount({ active: false, value: '' })}>X</button>
+                    <button className='bg-white float-end border-0 mt-1' onClick={() => setDiscount({ active: false, value: 0 })}>X</button>
                   </div>
                 </div>
               )}
@@ -314,12 +314,12 @@ export default function Step2() {
                   </p>
                   <div className="col-3">
                     <div className="input-group float-start my-auto mt-1">
-                      <input type="number" placeholder='0' className="form-control border-end-0" id='tax' value={tax.value} onChange={(event) => setTax({ active: true, value: event.target.value })} />
+                      <input type="number" placeholder='0' className="form-control border-end-0" id='tax' value={tax.value} onChange={(event) => setTax({ active: true, value: Number(event.target.value) })} />
                       <label className="input-group-text bg-white border-none" style={{ fontSize: 15 }} htmlFor="tax" >%</label>
                     </div>
                   </div>
                   <div className='col-1 my-auto'>
-                    <button className='bg-white float-end border-0 mt-1' onClick={() => setTax({ active: false, value: '' })}>X</button>
+                    <button className='bg-white float-end border-0 mt-1' onClick={() => setTax({ active: false, value: 0 })}>X</button>
                   </div>
                 </div>
               )}
@@ -333,11 +333,11 @@ export default function Step2() {
                   <div className="col-3">
                     <div className="input-group my-auto mt-1 ">
                       <label className="input-group-text bg-white border-none" style={{ fontSize: 15, padding: 6 }} htmlFor="shipping" >Rp</label>
-                      <input type="number" placeholder='0' className="form-control border-start-0" style={{ padding: '0px 2px' }} id='shipping' value={shipping.value} onChange={(event) => setShipping({ active: true, value: event.target.value })} />
+                      <input type="number" placeholder='0' className="form-control border-start-0" style={{ padding: '0px 2px' }} id='shipping' value={shipping.value} onChange={(event) => setShipping({ active: true, value: Number(event.target.value) })} />
                     </div>
                   </div>
                   <div className='col-1 my-auto'>
-                    <button className='bg-white float-end border-0 mt-1' onClick={() => setShipping({ active: false, value: '' })}>X</button>
+                    <button className='bg-white float-end border-0 mt-1' onClick={() => setShipping({ active: false, value: 0 })}>X</button>
                   </div>
                 </div>
               )}

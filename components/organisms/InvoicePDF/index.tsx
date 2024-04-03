@@ -6,8 +6,8 @@ interface InvoicePDFProps {
   alamat_perusahaan: string;
   no_invoice: string;
   company: string;
-  invoice_date: Date;
-  due_date: Date;
+  invoice_date: string;
+  due_date: string;
   payment_instruction: string;
   desc?: Desc[];
   dp?: Dp[];
@@ -26,7 +26,7 @@ interface Desc {
 }
 
 interface Dp {
-  date: Date;
+  date: string;
   rate: number;
 }
 
@@ -48,13 +48,24 @@ export default function InvoicePDF(props: Partial<InvoicePDFProps>) {
     payment_instruction,
   } = props;
 
+  if (Object.prototype.toString.call(invoice_date) === "[object Date]") {
+    // it is a date
+    if (isNaN(invoice_date)) { // d.getTime() or d.valueOf() will also work
+      // date object is not valid
+    } else {
+      // date object is valid
+    }
+  } else {
+    // not a date object
+  }
+
   // Margin Halaman
   const getPageMargins = () => {
     return `@page { margin: 40px 0px 39px 0px !important; }`;
   };
 
   const Total = () => {
-    if (discount > 0 || tax > 0 || shipping > 0) {
+    if (discount! > 0 || tax! > 0 || shipping! > 0) {
       return (
         <div className="row mb-1 subtotal">
           <p className='col-6'></p>
@@ -155,7 +166,7 @@ export default function InvoicePDF(props: Partial<InvoicePDFProps>) {
           </p>
         </div>
 
-        {discount > 0 && (
+        {discount! > 0 && (
           <div className="row subtotal">
             <p className='col-6'></p>
             <p className='col-3 head-table'>DISCOUNT</p>
@@ -171,7 +182,7 @@ export default function InvoicePDF(props: Partial<InvoicePDFProps>) {
           </div>
         )}
 
-        {tax > 0 && (
+        {tax! > 0 && (
           <div className="row subtotal">
             <p className='col-6'></p>
             <p className='col-3 head-table'>TAX</p>
@@ -187,7 +198,7 @@ export default function InvoicePDF(props: Partial<InvoicePDFProps>) {
           </div>
         )}
 
-        {shipping > 0 && (
+        {shipping! > 0 && (
           <div className="row mb-1 subtotal">
             <p className='col-6'></p>
             <p className='col-3 head-table'>SHIPPING</p>
@@ -203,6 +214,7 @@ export default function InvoicePDF(props: Partial<InvoicePDFProps>) {
           </div>
         )}
 
+        {/* @ts-expect-error Server Component */}
         <Total />
 
         {/* DP */}

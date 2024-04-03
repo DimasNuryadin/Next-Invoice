@@ -5,6 +5,7 @@ import { useState } from 'react'
 import Link from "next/link";
 import { sendEmail } from "../services/user";
 import Loading from "../components/molecules/Loading"
+import Image from "next/image";
 
 export default function Home() {
   const [nama, setNama] = useState('')
@@ -51,7 +52,14 @@ export default function Home() {
         <nav className="navbar mb-5">
           <div className="container-fluid">
             <a className="navbar-brand" href="#" style={{ marginLeft: '-10px' }}>
-              <img className="logo" src="/img/logo-1.png" alt="logo" />
+              <Image
+                src="/img/logo-1.png"
+                className="logo"
+                alt="logo"
+                height={27}
+                width={120}
+                unoptimized
+              />
             </a>
             <Link href='/login'>
               <Button buttonType="btn-primary" label="Login" />
@@ -115,17 +123,17 @@ export default function Home() {
               <h2 className="title">Contact Us</h2>
 
               <div className="d-flex flex-row info">
-                <img src="/icon/phone-light.svg" alt="Phone"></img>
+                <Image src="/icon/phone-light.svg" width={28} height={28} alt="Phone"></Image>
                 <p className="ms-3">0812-2025-9288</p>
               </div>
 
               <div className="d-flex flex-row info">
-                <img src="/icon/email-light.svg" alt="Email"></img>
+                <Image src="/icon/email-light.svg" width={28} height={28} alt="Email"></Image>
                 <p className="ms-3">kamojangmandiri1@gmail.com</p>
               </div>
 
               <div className="d-flex flex-row info">
-                <img src="/icon/address-light.svg" alt="Address"></img>
+                <Image src="/icon/address-light.svg" width={28} height={28} alt="Address"></Image>
                 <p className="ms-3">Jl. Raya Kamojang No. 74-Kab. Bandung</p>
               </div>
             </div>
