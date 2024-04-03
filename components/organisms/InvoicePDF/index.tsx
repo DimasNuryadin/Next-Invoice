@@ -48,17 +48,6 @@ export default function InvoicePDF(props: Partial<InvoicePDFProps>) {
     payment_instruction,
   } = props;
 
-  if (Object.prototype.toString.call(invoice_date) === "[object Date]") {
-    // it is a date
-    if (isNaN(invoice_date)) { // d.getTime() or d.valueOf() will also work
-      // date object is not valid
-    } else {
-      // date object is valid
-    }
-  } else {
-    // not a date object
-  }
-
   // Margin Halaman
   const getPageMargins = () => {
     return `@page { margin: 40px 0px 39px 0px !important; }`;
